@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="primary" type="color">#167bf6</item>
+    <item name="primaryDark" type="color">#5c79ff</item>
+    <item name="primaryLight" type="color">#9ec9ff</item>
+    <item name="background" type="color">#FFFFFF</item>
+    <item name="backgroundDark" type="color">#f8fbff</item>
+    <item name="primaryText" type="color">#212121</item>
+    <item name="primaryTextOpacity" type="color">#CC212121</item>
+    <item name="secondaryText" type="color">#757575</item>
+    <item name="onPrimaryText" type="color">#FFFFFF</item>
+    <item name="onPrimaryTextOpacity" type="color">##ccdeff</item>
+    <item name="divider" type="color">#BDBDBD</item>
+    <item name="navigation" type="color">#167bf6</item>
+    <item name="statusbar" type="color">#ffff</item>
+</resources>
