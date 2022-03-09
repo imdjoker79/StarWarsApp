@@ -4,6 +4,7 @@
     /* absolute path */
     "baseUrl": ".",
     "paths": {
+      "@assets/*":["src/assets/*"],
       "@common/*":["src/common/*"],
       "@contexts/*":["src/contexts/*"],
       "@helpers/*":["src/helpers/*"],
