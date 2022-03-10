@@ -26,6 +26,29 @@ export function setInitialRoot() {
   });
 }
 
+export function setAuthRoot() {
+  Navigation.setRoot({
+    root: {
+      stack: {
+        id: Pages.loginScreen.id,
+        children: [
+          {
+            component: {
+              id: Pages.loginScreen.id,
+              name: Pages.loginScreen.name,
+              options: {
+                topBar: {
+                  visible: false,
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+  });
+}
+
 export function setTabsRoot() {
   Navigation.setRoot({
     root: {
@@ -43,22 +66,6 @@ export function setTabsRoot() {
                   },
                 },
               ],
-              options: {
-                bottomTab: {
-                  text: translate(
-                    {
-                      en: 'Home',
-                      id: 'Beranda',
-                    },
-                    language,
-                  ),
-                  ...getPlatformTabsIcon(
-                    SFSymbols.house,
-                    SFSymbols['house.fill'],
-                    'home',
-                  ),
-                },
-              },
             },
           },
           {
