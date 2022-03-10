@@ -9,6 +9,7 @@ export function WrappedComponent(Component: any) {
         <Component {...props} />
       </Provider>
     );
+    EnhancedComponent.options = Component.options;
     return <EnhancedComponent />;
   };
 }

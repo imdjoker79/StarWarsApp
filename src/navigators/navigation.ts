@@ -103,14 +103,15 @@ export function registerComponent() {
   Navigation.registerComponent(Pages.splashScreen.name, () =>
     WrappedComponent(SplashScreen),
   );
-  Navigation.registerComponent(Pages.splashScreen.name, () =>
-    WrappedComponent(SplashScreen),
+  Navigation.registerComponent(
+    Pages.loginScreen.name,
+    () => WrappedComponent(LoginScreen),
+    () => LoginScreen,
   );
-  Navigation.registerComponent(Pages.loginScreen.name, () =>
-    WrappedComponent(LoginScreen),
-  );
-  Navigation.registerComponent(Pages.registerScreen.name, () =>
-    WrappedComponent(RegisterScreen),
+  Navigation.registerComponent(
+    Pages.registerScreen.name,
+    () => WrappedComponent(RegisterScreen),
+    () => RegisterScreen,
   );
   Navigation.registerComponent(Pages.createGroupScreen.name, () =>
     WrappedComponent(CreateGroup),
@@ -119,8 +120,10 @@ export function registerComponent() {
     Pages.inviteMemberScreen.name,
     () => InviteMember,
   );
-  Navigation.registerComponent(Pages.homeScreen.name, () =>
-    WrappedComponent(HomeScreen),
+  Navigation.registerComponent(
+    Pages.homeScreen.name,
+    () => WrappedComponent(HomeScreen),
+    () => HomeScreen,
   );
   Navigation.registerComponent(Pages.groupScreen.name, () =>
     WrappedComponent(GroupScreen),

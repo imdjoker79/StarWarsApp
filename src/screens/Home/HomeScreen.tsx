@@ -1,20 +1,31 @@
 import {Button, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {switchLang} from '@redux/language/index';
-import {RootState} from '../../store';
+import {RootState, store} from '../../store';
 import translate from '../../helpers/translator';
 import {useDispatch, useSelector} from 'react-redux';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {getPlatformTabsIcon} from '../../navigators/helpers/navigationIconHelpers';
+import {SFSymbols} from '../../assets/symbols/SFSymbols';
+import {Navigation} from 'react-native-navigation';
 
-const HomeScreen: React.FunctionComponent = (_): any => {
+const HomeScreen = (props: any) => {
   const dispatch = useDispatch();
-
   const language = useSelector((state: RootState) => state.language);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log('LANG', language);
-  //   })();
-  // }, [language]);
+  useEffect(() => {
+    Navigation.mergeOptions(props.componentId, {
+      bottomTab: {
+        text: translate(
+          {
+            en: 'Home',
+            id: 'Beranda',
+          },
+          language,
+        ),
+      },
+    });
+  }, [language, props.componentId]);
 
   return (
     <View style={styles.container}>
@@ -42,6 +53,37 @@ const HomeScreen: React.FunctionComponent = (_): any => {
     </View>
   );
 };
+
+HomeScreen.options = () => ({
+  topBar: {
+    rightButtons: [
+      {
+        id: 'save',
+        text: 'Save',
+        color: Colors.primary,
+      },
+    ],
+    title: {
+      text: translate(
+        {
+          en: 'Home',
+          id: 'Beranda',
+        },
+        store.getState().language,
+      ),
+    },
+  },
+  bottomTab: {
+    text: translate(
+      {
+        en: 'Home',
+        id: 'Beranda',
+      },
+      store.getState().language,
+    ),
+    ...getPlatformTabsIcon(SFSymbols.house, SFSymbols['house.fill'], 'home'),
+  },
+});
 
 export default HomeScreen;
 

@@ -11,9 +11,26 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1CEE7D2B04524D21A4F2B08B /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D94DD6442EEF48D682719A8E /* FontAwesome5_Brands.ttf */; };
+		1EF213B68B3B4AFC93736A20 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 77B881CC917C4D37905737D8 /* Fontisto.ttf */; };
+		1F3AC5C8A2E54DBEBE4B2EE3 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 496E152942CB4AD6997F24F2 /* Zocial.ttf */; };
+		2D17E65350CF4566AB0CB90F /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F152B54EE2E431FA0CA8F2C /* MaterialIcons.ttf */; };
+		3B7D006BE456464F9292B7D0 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9DF3395EC0342CFB1C3BD6F /* FontAwesome.ttf */; };
+		4E9B219E83924A2495D86AC6 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 66082F7C372541A8AC0ACB92 /* FontAwesome5_Solid.ttf */; };
+		5BF19B7082E7487493B1B0E1 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D06B0DF70A524A768A7CA715 /* FontAwesome5_Regular.ttf */; };
+		5F33B4C627DA63BF00599C67 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 5F33B4C527DA63BF00599C67 /* Fonts */; };
+		60C5793C12A84BFE85215F7E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF7D518BD280482DACB92C8B /* SimpleLineIcons.ttf */; };
 		6172F2D35A4C3AA820D92908 /* libPods-starwarsapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-starwarsapp.a */; };
+		66307664B52E495C9CF4073E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24FBB06109694F4AB16267B6 /* Ionicons.ttf */; };
 		7EF68E3733C33B6898317E18 /* libPods-starwarsapp-starwarsappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-starwarsapp-starwarsappTests.a */; };
+		805CB62642E248928306612D /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2CC294946AA45458BB7F07A /* Entypo.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A9B0BED9970847F8A09A378B /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5840032B35AA445894BBDE54 /* Foundation.ttf */; };
+		AC19E01533CF42F490D4929C /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1840A76A6C12458E8C613216 /* EvilIcons.ttf */; };
+		B3111267ADD14D09B56D1222 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0583EEB79ACD41AFB6457F87 /* Feather.ttf */; };
+		C3B6C44C5B754AF1B6D18903 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95727D4131224AC3B28AAFDB /* AntDesign.ttf */; };
+		C3FA572281104C3395318130 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 398B88AEA369451D8FA04CE9 /* MaterialCommunityIcons.ttf */; };
+		CA24421B618C4B99BDCDF47E /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 89FB15F143BC481D88350094 /* Octicons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,20 +47,37 @@
 		00E356EE1AD99517003FC87E /* starwarsappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = starwarsappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* starwarsappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = starwarsappTests.m; sourceTree = "<group>"; };
+		0583EEB79ACD41AFB6457F87 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* starwarsapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = starwarsapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = starwarsapp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = starwarsapp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = starwarsapp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = starwarsapp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = starwarsapp/main.m; sourceTree = "<group>"; };
+		1840A76A6C12458E8C613216 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		1D0AE47A65C8663E3B452821 /* Pods-starwarsapp-starwarsappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-starwarsapp-starwarsappTests.release.xcconfig"; path = "Target Support Files/Pods-starwarsapp-starwarsappTests/Pods-starwarsapp-starwarsappTests.release.xcconfig"; sourceTree = "<group>"; };
+		24FBB06109694F4AB16267B6 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		2F152B54EE2E431FA0CA8F2C /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		398B88AEA369451D8FA04CE9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		496E152942CB4AD6997F24F2 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		5840032B35AA445894BBDE54 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		5F33B4C527DA63BF00599C67 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		6423831EA8574132BED9D8CC /* libPods-starwarsapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-starwarsapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		66082F7C372541A8AC0ACB92 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		6C97AB639B58BBB4B15BBE30 /* Pods-starwarsapp-starwarsappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-starwarsapp-starwarsappTests.debug.xcconfig"; path = "Target Support Files/Pods-starwarsapp-starwarsappTests/Pods-starwarsapp-starwarsappTests.debug.xcconfig"; sourceTree = "<group>"; };
+		77B881CC917C4D37905737D8 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = starwarsapp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		89FB15F143BC481D88350094 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		95727D4131224AC3B28AAFDB /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		ABFE59519B596E51CEFDCCC0 /* libPods-starwarsapp-starwarsappTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-starwarsapp-starwarsappTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A881CF5CF3F2B244570E2A /* Pods-starwarsapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-starwarsapp.debug.xcconfig"; path = "Target Support Files/Pods-starwarsapp/Pods-starwarsapp.debug.xcconfig"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-starwarsapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-starwarsapp.release.xcconfig"; path = "Target Support Files/Pods-starwarsapp/Pods-starwarsapp.release.xcconfig"; sourceTree = "<group>"; };
+		D06B0DF70A524A768A7CA715 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		D2CC294946AA45458BB7F07A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		D94DD6442EEF48D682719A8E /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		D9DF3395EC0342CFB1C3BD6F /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		FF7D518BD280482DACB92C8B /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +120,7 @@
 		13B07FAE1A68108700A75B9A /* starwarsapp */ = {
 			isa = PBXGroup;
 			children = (
+				5F33B4C527DA63BF00599C67 /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -122,6 +157,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E233CBF5F47BEE60B243DCF8 /* Pods */,
+				9D3E43152F50435D83483D4A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -135,6 +171,30 @@
 				00E356EE1AD99517003FC87E /* starwarsappTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		9D3E43152F50435D83483D4A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				95727D4131224AC3B28AAFDB /* AntDesign.ttf */,
+				D2CC294946AA45458BB7F07A /* Entypo.ttf */,
+				1840A76A6C12458E8C613216 /* EvilIcons.ttf */,
+				0583EEB79ACD41AFB6457F87 /* Feather.ttf */,
+				D9DF3395EC0342CFB1C3BD6F /* FontAwesome.ttf */,
+				D94DD6442EEF48D682719A8E /* FontAwesome5_Brands.ttf */,
+				D06B0DF70A524A768A7CA715 /* FontAwesome5_Regular.ttf */,
+				66082F7C372541A8AC0ACB92 /* FontAwesome5_Solid.ttf */,
+				77B881CC917C4D37905737D8 /* Fontisto.ttf */,
+				5840032B35AA445894BBDE54 /* Foundation.ttf */,
+				24FBB06109694F4AB16267B6 /* Ionicons.ttf */,
+				398B88AEA369451D8FA04CE9 /* MaterialCommunityIcons.ttf */,
+				2F152B54EE2E431FA0CA8F2C /* MaterialIcons.ttf */,
+				89FB15F143BC481D88350094 /* Octicons.ttf */,
+				FF7D518BD280482DACB92C8B /* SimpleLineIcons.ttf */,
+				496E152942CB4AD6997F24F2 /* Zocial.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		E233CBF5F47BEE60B243DCF8 /* Pods */ = {
@@ -242,8 +302,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F33B4C627DA63BF00599C67 /* Fonts in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				C3B6C44C5B754AF1B6D18903 /* AntDesign.ttf in Resources */,
+				805CB62642E248928306612D /* Entypo.ttf in Resources */,
+				AC19E01533CF42F490D4929C /* EvilIcons.ttf in Resources */,
+				B3111267ADD14D09B56D1222 /* Feather.ttf in Resources */,
+				3B7D006BE456464F9292B7D0 /* FontAwesome.ttf in Resources */,
+				1CEE7D2B04524D21A4F2B08B /* FontAwesome5_Brands.ttf in Resources */,
+				5BF19B7082E7487493B1B0E1 /* FontAwesome5_Regular.ttf in Resources */,
+				4E9B219E83924A2495D86AC6 /* FontAwesome5_Solid.ttf in Resources */,
+				1EF213B68B3B4AFC93736A20 /* Fontisto.ttf in Resources */,
+				A9B0BED9970847F8A09A378B /* Foundation.ttf in Resources */,
+				66307664B52E495C9CF4073E /* Ionicons.ttf in Resources */,
+				C3FA572281104C3395318130 /* MaterialCommunityIcons.ttf in Resources */,
+				2D17E65350CF4566AB0CB90F /* MaterialIcons.ttf in Resources */,
+				CA24421B618C4B99BDCDF47E /* Octicons.ttf in Resources */,
+				60C5793C12A84BFE85215F7E /* SimpleLineIcons.ttf in Resources */,
+				1F3AC5C8A2E54DBEBE4B2EE3 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

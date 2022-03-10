@@ -1,17 +1,20 @@
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
-import {NavigationFunctionComponent} from 'react-native-navigation';
+import {Navigation, NavigationFunctionComponent} from 'react-native-navigation';
 import {Colors} from '@common/colors';
-import {setTabsRoot} from '@navigators/roots';
+// import {setTabsRoot} from '@navigators/roots';
 import translate from '../../helpers/translator';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store';
+import {Pages} from '../../navigators/constants/allPages';
+import {setAuthRoot, setTabsRoot} from '../../navigators/roots';
 
 const SplashScreen: NavigationFunctionComponent = () => {
   const language = useSelector((state: RootState) => state.language);
   useEffect(() => {
     setTimeout(() => {
-      setTabsRoot();
+      setAuthRoot();
+      // setTabsRoot();
     }, 2000);
   }, []);
   return (
