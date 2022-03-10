@@ -1,10 +1,14 @@
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {NavigationFunctionComponent} from 'react-native-navigation';
-import {Colors} from '../../common/colors';
-import {setTabsRoot} from '../../navigators/roots';
+import {Colors} from '@common/colors';
+import {setTabsRoot} from '@navigators/roots';
+import translate from '../../helpers/translator';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store';
 
 const SplashScreen: NavigationFunctionComponent = () => {
+  const language = useSelector((state: RootState) => state.language);
   useEffect(() => {
     setTimeout(() => {
       setTabsRoot();
@@ -12,7 +16,15 @@ const SplashScreen: NavigationFunctionComponent = () => {
   }, []);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome</Text>
+      <Text style={styles.title}>
+        {translate(
+          {
+            en: 'WELCOME',
+            id: 'SELAMAT DATANG',
+          },
+          language,
+        )}
+      </Text>
       <View style={styles.loader}>
         <ActivityIndicator />
       </View>

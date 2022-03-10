@@ -9,11 +9,11 @@ module.exports = {
         alias: {
           '@assets': './src/assets',
           '@common': './src/common',
-          '@contexts': './src/contexts',
           '@helpers': './src/helpers',
           '@interfaces': './src/interfaces',
           '@navigators': './src/navigators',
           '@screens': './src/screens',
+          '@redux': './src/redux',
         },
       },
     ],

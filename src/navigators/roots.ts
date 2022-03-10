@@ -4,6 +4,11 @@ import {SFSymbols} from '@assets/symbols/SFSymbols';
 import {Pages} from './constants/allPages';
 import {MainTab} from './constants/mainTab';
 import {getPlatformTabsIcon} from './helpers/navigationIconHelpers';
+import translate from '@helpers/translator';
+import {store} from '../store';
+import {Language} from '../interfaces';
+
+let language: Language = store.getState().language;
 
 export function setInitialRoot() {
   Navigation.setRoot({
@@ -21,7 +26,7 @@ export function setInitialRoot() {
   });
 }
 
-export function setTabsRoot(callback?: () => void) {
+export function setTabsRoot() {
   Navigation.setRoot({
     root: {
       bottomTabs: {
@@ -40,7 +45,13 @@ export function setTabsRoot(callback?: () => void) {
               ],
               options: {
                 bottomTab: {
-                  text: 'Home',
+                  text: translate(
+                    {
+                      en: 'Home',
+                      id: 'Beranda',
+                    },
+                    language,
+                  ),
                   ...getPlatformTabsIcon(
                     SFSymbols.house,
                     SFSymbols['house.fill'],
@@ -63,7 +74,13 @@ export function setTabsRoot(callback?: () => void) {
               ],
               options: {
                 bottomTab: {
-                  text: 'Group',
+                  text: translate(
+                    {
+                      en: 'Group',
+                      id: 'Group',
+                    },
+                    language,
+                  ),
                   ...getPlatformTabsIcon(
                     SFSymbols.person,
                     SFSymbols['person.fill'],
@@ -86,7 +103,13 @@ export function setTabsRoot(callback?: () => void) {
               ],
               options: {
                 bottomTab: {
-                  text: 'You',
+                  text: translate(
+                    {
+                      en: 'You',
+                      id: 'Kamu',
+                    },
+                    language,
+                  ),
                   ...getPlatformTabsIcon(
                     SFSymbols.person,
                     SFSymbols['person.fill'],
@@ -99,5 +122,5 @@ export function setTabsRoot(callback?: () => void) {
         ],
       },
     },
-  }).then(callback);
+  });
 }
