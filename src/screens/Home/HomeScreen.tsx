@@ -1,37 +1,43 @@
 import {Button, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {Navigation, NavigationFunctionComponent} from 'react-native-navigation';
-import {Pages} from '../../navigators/constants/allPages';
-import {Colors} from '../../common/colors';
+import {switchLang} from '@redux/language/index';
+import {RootState} from '../../store';
+import translate from '../../helpers/translator';
+import {useDispatch, useSelector} from 'react-redux';
 
-const HomeScreen: NavigationFunctionComponent = (props): any => {
+const HomeScreen: React.FunctionComponent = (_): any => {
+  const dispatch = useDispatch();
+
+  const language = useSelector((state: RootState) => state.language);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log('LANG', language);
+  //   })();
+  // }, [language]);
+
   return (
     <View style={styles.container}>
-      <Text>HomeScreen</Text>
+      <Text style={{fontWeight: 'bold', fontSize: 16, padding: 20}}>
+        {translate(
+          {
+            en: 'ENGLISH',
+            id: 'INDONESIA',
+          },
+          language,
+        )}
+      </Text>
       <Button
         onPress={() => {
-          Navigation.push(props.componentId, {
-            component: {
-              id: Pages.createGroupScreen.name,
-              name: Pages.createGroupScreen.name,
-              options: {
-                topBar: {
-                  rightButtons: [
-                    {
-                      id: 'save',
-                      text: 'Save',
-                      color: Colors.primary,
-                    },
-                  ],
-                  title: {
-                    text: 'Create Group Account',
-                  },
-                },
-              },
-            },
-          });
+          dispatch(switchLang({code: 'en', name: 'English'}));
         }}
-        title="test"
+        title="EN"
+      />
+      <Button
+        onPress={() => {
+          dispatch(switchLang({code: 'id', name: 'Indonesia'}));
+        }}
+        title="ID"
       />
     </View>
   );

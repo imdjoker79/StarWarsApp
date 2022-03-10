@@ -4,14 +4,15 @@ import {Navigation} from 'react-native-navigation';
 import {PlatformColorsAndroid, PlatformColorsIOS} from '@common/colors';
 import {platformNativeColor} from '@helpers/colorHelpers';
 import {Pages} from './constants/allPages';
-import CreateGroup from '../screens/Group/CreateGroup';
-import SplashScreen from '../screens/Splash/SplashScreen';
-import LoginScreen from '../screens/Auth/LoginScreen';
-import RegisterScreen from '../screens/Auth/RegisterScreen';
-import InviteMember from '../screens/Group/InviteMember';
-import GroupScreen from '../screens/Group/GroupScreen';
-import ProfileScreen from '../screens/Profile/ProfileScreen';
-import HomeScreen from '../screens/Home/HomeScreen';
+import CreateGroup from '@screens/Group/CreateGroup';
+import SplashScreen from '@screens/Splash/SplashScreen';
+import LoginScreen from '@screens/Auth/LoginScreen';
+import RegisterScreen from '@screens/Auth/RegisterScreen';
+import InviteMember from '@screens/Group/InviteMember';
+import GroupScreen from '@screens/Group/GroupScreen';
+import ProfileScreen from '@screens/Profile/ProfileScreen';
+import HomeScreen from '@screens/Home/HomeScreen';
+import {WrappedComponent} from '../wrapper';
 
 export function setDefaultOptions() {
   Navigation.setDefaultOptions({
@@ -99,15 +100,32 @@ export function registerComponent() {
   if (__DEV__) {
   }
 
-  Navigation.registerComponent(Pages.splashScreen.name, () => SplashScreen);
-  Navigation.registerComponent(Pages.loginScreen.name, () => LoginScreen);
-  Navigation.registerComponent(Pages.registerScreen.name, () => RegisterScreen);
-  Navigation.registerComponent(Pages.createGroupScreen.name, () => CreateGroup);
+  Navigation.registerComponent(Pages.splashScreen.name, () =>
+    WrappedComponent(SplashScreen),
+  );
+  Navigation.registerComponent(Pages.splashScreen.name, () =>
+    WrappedComponent(SplashScreen),
+  );
+  Navigation.registerComponent(Pages.loginScreen.name, () =>
+    WrappedComponent(LoginScreen),
+  );
+  Navigation.registerComponent(Pages.registerScreen.name, () =>
+    WrappedComponent(RegisterScreen),
+  );
+  Navigation.registerComponent(Pages.createGroupScreen.name, () =>
+    WrappedComponent(CreateGroup),
+  );
   Navigation.registerComponent(
     Pages.inviteMemberScreen.name,
     () => InviteMember,
   );
-  Navigation.registerComponent(Pages.homeScreen.name, () => HomeScreen);
-  Navigation.registerComponent(Pages.groupScreen.name, () => GroupScreen);
-  Navigation.registerComponent(Pages.profileScreen.name, () => ProfileScreen);
+  Navigation.registerComponent(Pages.homeScreen.name, () =>
+    WrappedComponent(HomeScreen),
+  );
+  Navigation.registerComponent(Pages.groupScreen.name, () =>
+    WrappedComponent(GroupScreen),
+  );
+  Navigation.registerComponent(Pages.profileScreen.name, () =>
+    WrappedComponent(ProfileScreen),
+  );
 }
