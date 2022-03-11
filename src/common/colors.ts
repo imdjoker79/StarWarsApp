@@ -7,6 +7,7 @@ export enum Colors {
   darkGray = '#262626',
   green = '#20d126',
   transparent = 'transparent',
+  blueEgg = '#5ea5b1',
 }
 
 export enum PlatformColorsIOS {

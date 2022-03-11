@@ -4,21 +4,18 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Button,
-  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Colors} from '@common/colors';
-import {isIos, windowWidth} from '../../common/const';
+import {windowWidth} from '@common/const';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState, store} from '../../store';
-import {Pages} from '../../navigators/constants/allPages';
+import {RootState} from '../../store';
+import {Pages} from '@navigators/constants/allPages';
 import {Navigation} from 'react-native-navigation';
-import {switchLang} from '../../redux/language';
-import translate from '../../helpers/translator';
+import {switchLang} from '@redux/language';
+import translate from '@helpers/translator';
 import {Switch} from 'react-native-switch';
-import {setTabsRoot} from '../../navigators/roots';
-import {ScrollView} from 'react-native-gesture-handler';
+import {setTabsRoot} from '@navigators/roots';
 
 const LoginScreen = (props: any) => {
   const dispatch = useDispatch();

@@ -11,10 +11,11 @@ export interface SignProps {
   email: string;
   password: string;
 }
-export interface SignUpProps {
-  email: string;
-  firstName: string;
-  lasName: string;
-  password: string;
-  jobTitle: string;
+export interface DataUserItem {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  password?: string;
+  jobTitle?: string;
+  imageUrl?: string;
 }
