@@ -5,7 +5,12 @@ export enum Colors {
   bgMain = '#F0F2F5',
   gray = '#F1F1F1',
   darkGray = '#262626',
+  semiDarkGray = '#C4C4C4',
+  lightGrey = '#d5d5d5',
   green = '#20d126',
+  secondGreen = '#5de864',
+  thirdGreen = '#afdcb7',
+  darkGreen = '#1ec634',
   transparent = 'transparent',
   blueEgg = '#5ea5b1',
 }

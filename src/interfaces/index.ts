@@ -1,3 +1,5 @@
+import {PieChartData} from 'react-native-svg-charts';
+
 export type Language =
   | {code: 'id'; name: 'Indonesia'}
   | {code: 'en'; name: 'English'};
@@ -18,4 +20,12 @@ export interface DataUserItem {
   password?: string;
   jobTitle?: string;
   imageUrl?: string;
+}
+
+export interface LabelsProps {
+  slices: {
+    pieCentroid: string;
+    labelCentroid: string;
+    data: PieChartData;
+  }[];
 }
