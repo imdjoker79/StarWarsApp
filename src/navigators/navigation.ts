@@ -41,6 +41,9 @@ export function setDefaultOptions() {
         noBorder: true,
       },
       noBorder: false,
+      backButton: {
+        showTitle: false,
+      },
     },
     bottomTabs: {
       animate: false,
@@ -100,8 +103,10 @@ export function registerComponent() {
   if (__DEV__) {
   }
 
-  Navigation.registerComponent(Pages.splashScreen.name, () =>
-    WrappedComponent(SplashScreen),
+  Navigation.registerComponent(
+    Pages.splashScreen.name,
+    () => WrappedComponent(SplashScreen),
+    () => SplashScreen,
   );
   Navigation.registerComponent(
     Pages.loginScreen.name,
@@ -113,11 +118,14 @@ export function registerComponent() {
     () => WrappedComponent(RegisterScreen),
     () => RegisterScreen,
   );
-  Navigation.registerComponent(Pages.createGroupScreen.name, () =>
-    WrappedComponent(CreateGroup),
+  Navigation.registerComponent(
+    Pages.createGroupScreen.name,
+    () => WrappedComponent(CreateGroup),
+    () => CreateGroup,
   );
   Navigation.registerComponent(
     Pages.inviteMemberScreen.name,
+    () => WrappedComponent(InviteMember),
     () => InviteMember,
   );
   Navigation.registerComponent(
@@ -125,10 +133,14 @@ export function registerComponent() {
     () => WrappedComponent(HomeScreen),
     () => HomeScreen,
   );
-  Navigation.registerComponent(Pages.groupScreen.name, () =>
-    WrappedComponent(GroupScreen),
+  Navigation.registerComponent(
+    Pages.groupScreen.name,
+    () => WrappedComponent(GroupScreen),
+    () => GroupScreen,
   );
-  Navigation.registerComponent(Pages.profileScreen.name, () =>
-    WrappedComponent(ProfileScreen),
+  Navigation.registerComponent(
+    Pages.profileScreen.name,
+    () => WrappedComponent(ProfileScreen),
+    () => ProfileScreen,
   );
 }

@@ -9,10 +9,10 @@ interface Prop {
   onChange: (val: any) => void;
 }
 
-const RegisterInput = ({title, placeholder, onChange}: Prop) => {
+const TextInputCustom = ({title, placeholder, onChange}: Prop) => {
   return (
     <View style={styles.inputWrapper}>
-      <Text>{title}</Text>
+      <Text style={styles.title}>{title}</Text>
       <View style={styles.row}>
         <TextInput
           style={styles.input}
@@ -25,12 +25,16 @@ const RegisterInput = ({title, placeholder, onChange}: Prop) => {
   );
 };
 
-export default RegisterInput;
+export default TextInputCustom;
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  title: {
+    fontWeight: '500',
+    color: Colors.darkGray,
   },
   input: {
     padding: 5,

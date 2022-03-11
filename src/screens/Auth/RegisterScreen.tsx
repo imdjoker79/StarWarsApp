@@ -1,15 +1,23 @@
-import {StyleSheet, View, ScrollView, KeyboardAvoidingView} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Modal,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Colors} from '../../common/colors';
+import {Colors} from '@common/colors';
 import {Navigation} from 'react-native-navigation';
-import translate from '../../helpers/translator';
+import translate from '@helpers/translator';
 import {RootState, store} from '../../store';
-import RegisterInput from './components/RegisterInput';
 import {useSelector} from 'react-redux';
-import {isIos} from '../../common/const';
-import {Header} from 'react-native/Libraries/NewAppScreen';
+import {isIos, windowWidth} from '@common/const';
+import {Pages} from '@navigators/constants/allPages';
+import TextInputCustom from '@components/TextInputCustom';
 
-const RegisterScreen = () => {
+const RegisterScreen = (props: any) => {
   const language = useSelector((state: RootState) => state.language);
 
   const [email, setEmail] = useState<string>();
@@ -18,6 +26,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState<string>();
   const [confPassword, setConfPassword] = useState<string>();
   const [job, setJob] = useState<string>();
+  const [visibleModal, setVisibleModal] = useState<boolean>(false);
 
   useEffect(() => {
     // console.log(email);
@@ -28,7 +37,9 @@ const RegisterScreen = () => {
     const navigationButtonEventListener =
       Navigation.events().registerNavigationButtonPressedListener(
         ({buttonId}) => {
-          console.log(buttonId);
+          if (buttonId === 'SAVE_REGISTER') {
+            onSaveRegister();
+          }
         },
       );
     return () => {
@@ -36,19 +47,35 @@ const RegisterScreen = () => {
     };
   }, []);
 
+  const onSaveRegister = () => {
+    setVisibleModal(true);
+  };
+
+  const onGoCreateGroup = () => {
+    setVisibleModal(false);
+    setTimeout(() => {
+      Navigation.push(props.componentId, {
+        component: {
+          id: Pages.createGroupScreen.id,
+          name: Pages.createGroupScreen.name,
+        },
+      });
+    }, 500);
+  };
+
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={70}
       behavior={isIos ? 'padding' : 'height'}
       style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainerStyle}>
-        <RegisterInput
+        <TextInputCustom
           title={'Email'}
           placeholder={'XXX@gmail.com'}
           onChange={setEmail}
         />
         <View style={styles.inputSeparatorLG} />
-        <RegisterInput
+        <TextInputCustom
           title={translate(
             {
               en: 'First Name',
@@ -66,7 +93,7 @@ const RegisterScreen = () => {
           onChange={setFirstName}
         />
         <View style={styles.inputSeparatorSM} />
-        <RegisterInput
+        <TextInputCustom
           title={translate(
             {
               en: 'Last Name',
@@ -84,7 +111,7 @@ const RegisterScreen = () => {
           onChange={setLastName}
         />
         <View style={styles.inputSeparatorLG} />
-        <RegisterInput
+        <TextInputCustom
           title={translate(
             {
               en: 'Password',
@@ -102,7 +129,7 @@ const RegisterScreen = () => {
           onChange={setPassword}
         />
         <View style={styles.inputSeparatorSM} />
-        <RegisterInput
+        <TextInputCustom
           title={translate(
             {
               en: 'Confirm Password',
@@ -120,7 +147,7 @@ const RegisterScreen = () => {
           onChange={setConfPassword}
         />
         <View style={styles.inputSeparatorLG} />
-        <RegisterInput
+        <TextInputCustom
           title={translate(
             {
               en: 'Job Title',
@@ -138,6 +165,48 @@ const RegisterScreen = () => {
           onChange={setJob}
         />
       </ScrollView>
+
+      <Modal visible={visibleModal} transparent={true}>
+        <View style={{...styles.modal}}>
+          <View style={styles.modalContent}>
+            <Text style={{...styles.textTitle, fontSize: 18}}>
+              {translate(
+                {
+                  en: 'Are you going to create group account?',
+                  id: 'Apakah kamu akan membuat grub akun?',
+                },
+                language,
+              )}
+            </Text>
+            <View style={styles.spacer} />
+            <TouchableOpacity style={styles.btnYes} onPress={onGoCreateGroup}>
+              <Text style={{...styles.textTitle, color: Colors.white}}>
+                {translate(
+                  {
+                    en: 'Yes, I do',
+                    id: 'Ya, tentu',
+                  },
+                  language,
+                )}
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.spacer} />
+            <TouchableOpacity
+              style={styles.btnSkip}
+              onPress={() => setVisibleModal(false)}>
+              <Text style={{...styles.textTitle, color: Colors.primary}}>
+                {translate(
+                  {
+                    en: 'Skip',
+                    id: 'Lewati',
+                  },
+                  language,
+                )}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </KeyboardAvoidingView>
   );
 };
@@ -146,7 +215,7 @@ RegisterScreen.options = () => ({
   topBar: {
     rightButtons: [
       {
-        id: 'save',
+        id: 'SAVE_REGISTER',
         text: translate(
           {
             en: 'Save',
@@ -190,5 +259,40 @@ const styles = StyleSheet.create({
   },
   inputSeparatorSM: {
     marginVertical: 0.5,
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.transparent,
+  },
+  modalContent: {
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+    width: windowWidth - 40,
+    backgroundColor: Colors.white,
+    shadowColor: Colors.darkGray,
+    elevation: 0.5,
+    shadowOpacity: 0.5,
+    borderRadius: 10,
+  },
+  btnYes: {
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: Colors.green,
+  },
+  btnSkip: {
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: Colors.primary,
+  },
+  textTitle: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'grey',
+  },
+  spacer: {
+    marginVertical: 10,
   },
 });
