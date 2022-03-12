@@ -3,13 +3,22 @@ import React from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors} from '@common/colors';
 
-interface Prop {
+interface TextInputCustomProps {
   title: string;
   placeholder: string;
-  onChange: (val: any) => void;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters' | undefined;
+  secureText?: boolean;
+  onChange: (val: string) => void;
+  errorMessage?: string;
 }
 
-const TextInputCustom = ({title, placeholder, onChange}: Prop) => {
+const TextInputCustom = ({
+  title,
+  placeholder,
+  onChange,
+  autoCapitalize = 'words',
+  secureText = false,
+}: TextInputCustomProps) => {
   return (
     <View style={styles.inputWrapper}>
       <Text style={styles.title}>{title}</Text>
@@ -18,6 +27,8 @@ const TextInputCustom = ({title, placeholder, onChange}: Prop) => {
           style={styles.input}
           placeholder={placeholder}
           onChangeText={onChange}
+          autoCapitalize={autoCapitalize}
+          secureTextEntry={secureText}
         />
         <Entypo name={'chevron-thin-right'} size={15} color={Colors.darkGray} />
       </View>
@@ -46,5 +57,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.white,
     justifyContent: 'space-between',
+  },
+  errorMessage: {
+    fontWeight: '200',
+    fontSize: 8,
   },
 });

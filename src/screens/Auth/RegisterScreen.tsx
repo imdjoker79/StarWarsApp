@@ -1,59 +1,55 @@
-import {StyleSheet, View, ScrollView, KeyboardAvoidingView} from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {Colors} from '@common/colors';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Alert,
+  ToastAndroid,
+} from 'react-native';
 import {Navigation} from 'react-native-navigation';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {Colors} from '@common/colors';
 import translate from '@helpers/translator';
-import {RootState, store} from '../../store';
-import {useSelector} from 'react-redux';
 import {isIos, windowWidth} from '@common/const';
 import {Pages} from '@navigators/constants/allPages';
 import TextInputCustom from '@components/TextInputCustom';
-import ProfileScreen from '../Profile/ProfileScreen';
-import CustomModal from '../../components/CustomModal';
-import {setTabsRoot} from '../../navigators/roots';
-import LoaderModal from '../../components/LoaderModal';
+import ProfileScreen from '@screens/Profile/ProfileScreen';
+import CustomModal from '@components/CustomModal';
+import {setAuthRoot} from '@navigators/roots';
+import LoaderModal from '@components/LoaderModal';
+import {RootState, store} from '../../store';
+import {clearRegisterState, registerRequest} from '@redux/auth/register';
+import {RegisterBodyProps} from '@interfaces/index';
 
 const RegisterScreen = (props: any) => {
+  const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
+  const registerData = useSelector((state: RootState) => state.register);
 
-  const [email, setEmail] = useState<string>();
-  const [firstName, setFirstName] = useState<string>();
-  const [lastName, setLastName] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [confPassword, setConfPassword] = useState<string>();
-  const [job, setJob] = useState<string>();
+  const [email, setEmail] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [jobTitle, setJobTitle] = useState<string>('');
   const [savedAccount, setSavedAccount] = useState(false);
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    // console.log(email);
-    // console.log(firstName);
-  }, [email, firstName]);
-
-  useEffect(() => {
-    const navigationButtonEventListener =
-      Navigation.events().registerNavigationButtonPressedListener(
-        ({buttonId}) => {
-          if (buttonId === 'SAVE_REGISTER') {
-            onSaveRegister();
-          }
-        },
-      );
-    return () => {
-      navigationButtonEventListener.remove();
-    };
-  }, []);
-
   const onSaveRegister = () => {
-    setSavedAccount(true);
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setTimeout(() => {
-        setVisibleModal(true);
-      }, 700);
-    }, 1000);
+    let bodyRequest: RegisterBodyProps = {
+      email,
+      firstName,
+      lastName,
+      password,
+      jobTitle,
+      imageUrl: '',
+      confirmPassword,
+    };
+    dispatch(registerRequest(bodyRequest));
   };
 
   const onGoCreateGroup = () => {
@@ -71,9 +67,45 @@ const RegisterScreen = (props: any) => {
   const onFinishRegister = () => {
     setVisibleModal(false);
     setTimeout(() => {
-      setTabsRoot();
+      setAuthRoot();
     }, 700);
   };
+
+  useEffect(() => {
+    if (registerData.status === 200) {
+      setSavedAccount(true);
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setTimeout(() => {
+          setVisibleModal(true);
+        }, 700);
+      }, 1000);
+    } else if (registerData.status === 403) {
+      if (isIos) {
+        Alert.alert('Validation', registerData.message, [
+          {text: 'OK', onPress: () => {}},
+        ]);
+      } else {
+        ToastAndroid.show(registerData.message, ToastAndroid.SHORT);
+      }
+      dispatch(clearRegisterState());
+    }
+  }, [registerData]);
+
+  useEffect(() => {
+    const navigationButtonEventListener =
+      Navigation.events().registerNavigationButtonPressedListener(
+        ({buttonId}) => {
+          if (buttonId === 'SAVE_REGISTER') {
+            onSaveRegister();
+          }
+        },
+      );
+    return () => {
+      navigationButtonEventListener.remove();
+    };
+  }, [email, firstName, lastName, password, jobTitle]);
 
   return (
     <KeyboardAvoidingView
@@ -84,11 +116,12 @@ const RegisterScreen = (props: any) => {
       {savedAccount ? (
         <ProfileScreen isParentScreen={false} />
       ) : (
-        <View>
+        <View style={styles.container}>
           <ScrollView contentContainerStyle={styles.contentContainerStyle}>
             <TextInputCustom
               title={'Email'}
               placeholder={'XXX@gmail.com'}
+              autoCapitalize={'none'}
               onChange={setEmail}
             />
             <View style={styles.inputSeparatorLG} />
@@ -144,6 +177,7 @@ const RegisterScreen = (props: any) => {
                 language,
               )}
               onChange={setPassword}
+              secureText={true}
             />
             <View style={styles.inputSeparatorSM} />
             <TextInputCustom
@@ -161,25 +195,26 @@ const RegisterScreen = (props: any) => {
                 },
                 language,
               )}
-              onChange={setConfPassword}
+              onChange={setConfirmPassword}
+              secureText={true}
             />
             <View style={styles.inputSeparatorLG} />
             <TextInputCustom
               title={translate(
                 {
                   en: 'Job Title',
-                  id: 'Nama Pekerjaan',
+                  id: 'Nama Tugas',
                 },
                 language,
               )}
               placeholder={translate(
                 {
                   en: 'Job',
-                  id: 'Pekerjaan',
+                  id: 'Tugas',
                 },
                 language,
               )}
-              onChange={setJob}
+              onChange={setJobTitle}
             />
           </ScrollView>
         </View>

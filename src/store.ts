@@ -1,10 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {configureStore} from '@reduxjs/toolkit';
+import authReducer from '@redux/auth/login';
+import registerReducer from '@redux/auth/register';
 import languageReducer, {initialStateLang, switchLang} from './redux/language';
 
 export const store = configureStore({
   reducer: {
     language: languageReducer,
+    register: registerReducer,
+    auth: authReducer,
   },
 });
 

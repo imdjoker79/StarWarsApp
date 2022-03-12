@@ -41,6 +41,7 @@ export const data13 = [
 const HomeScreen = (props: any) => {
   const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
+  const dataUser = useSelector((state: RootState) => state.register);
 
   useEffect(() => {
     Navigation.mergeOptions(props.componentId, {
@@ -55,6 +56,10 @@ const HomeScreen = (props: any) => {
       },
     });
   }, [language, props.componentId]);
+
+  useEffect(() => {
+    console.log('DATA    ', dataUser);
+  }, [dataUser]);
 
   return (
     <ScrollView
