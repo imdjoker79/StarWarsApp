@@ -16,6 +16,7 @@ import {switchLang} from '@redux/language';
 import translate from '@helpers/translator';
 import {Switch} from 'react-native-switch';
 import {setTabsRoot} from '@navigators/roots';
+import LoaderModal from '../../components/LoaderModal';
 
 const LoginScreen = (props: any) => {
   const dispatch = useDispatch();
@@ -24,8 +25,14 @@ const LoginScreen = (props: any) => {
   const [lang, setLang] = useState<boolean>(language.code === 'id');
   const [email, setEmail] = useState<string>('');
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const onLogin = () => {
-    setTabsRoot();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setTabsRoot();
+    }, 1000);
   };
 
   const onGoRegister = () => {
@@ -47,6 +54,7 @@ const LoginScreen = (props: any) => {
 
   return (
     <View style={styles.container}>
+      <LoaderModal visible={isLoading} />
       <View style={styles.langSetting}>
         <Switch
           value={lang}
@@ -125,7 +133,7 @@ const LoginScreen = (props: any) => {
             }}>
             {translate(
               {
-                en: 'You don`t have your account?',
+                en: "You don't have your account?",
                 id: 'Kamu belum punya akun?',
               },
               language,

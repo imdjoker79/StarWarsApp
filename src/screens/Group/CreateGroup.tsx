@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import translate from '@helpers/translator';
 import {Colors} from '@common/colors';
@@ -19,6 +19,7 @@ import {Navigation} from 'react-native-navigation';
 import {Pages} from '@navigators/constants/allPages';
 import GroupMemberItem from '../../components/GroupMemberItem';
 import {DataUserItem} from '../../interfaces';
+import {setTabsRoot} from '../../navigators/roots';
 
 const CreateGroup = (props: any) => {
   const language = useSelector((state: RootState) => state.language);
@@ -48,6 +49,26 @@ const CreateGroup = (props: any) => {
     });
   };
 
+  useEffect(() => {
+    const navigationButtonEventListener =
+      Navigation.events().registerNavigationButtonPressedListener(
+        ({buttonId}) => {
+          if (buttonId === 'SAVE_CREATE_GROUP') {
+            onSavedCreateGroup();
+          }
+        },
+      );
+    return () => {
+      navigationButtonEventListener.remove();
+    };
+  }, []);
+
+  const onSavedCreateGroup = () => {
+    setTimeout(() => {
+      setTabsRoot();
+    }, 700);
+  };
+
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={70}
@@ -58,7 +79,7 @@ const CreateGroup = (props: any) => {
           <View style={styles.avatar}>
             <Text style={styles.avatarPlaceholder}>GM</Text>
           </View>
-          <Text style={styles.userName}>Group Name</Text>
+          <Text style={styles.groupName}>Group Name</Text>
         </View>
         <View style={styles.inputContainer}>
           <TextInputCustom
@@ -200,7 +221,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.white,
   },
-  userName: {
+  groupName: {
     marginTop: 5,
     fontWeight: 'bold',
     fontSize: 15,
