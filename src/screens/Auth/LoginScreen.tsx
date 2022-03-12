@@ -4,35 +4,42 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import {isEmpty} from 'ramda';
 import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Switch} from 'react-native-switch';
+
 import {Colors} from '@common/colors';
 import {windowWidth} from '@common/const';
-import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store';
 import {Pages} from '@navigators/constants/allPages';
 import {Navigation} from 'react-native-navigation';
 import {switchLang} from '@redux/language';
-import translate from '@helpers/translator';
-import {Switch} from 'react-native-switch';
 import {setTabsRoot} from '@navigators/roots';
-import LoaderModal from '../../components/LoaderModal';
+import {authRequest, clearAuthState} from '@redux/auth/login';
+import {AuthProps} from '@interfaces/index';
+import LoaderModal from '@components/LoaderModal';
+import translate from '@helpers/translator';
 
 const LoginScreen = (props: any) => {
   const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
+  const authData = useSelector((state: RootState) => state.auth);
 
   const [lang, setLang] = useState<boolean>(language.code === 'id');
   const [email, setEmail] = useState<string>('');
-
+  const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onLogin = () => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setTabsRoot();
-    }, 1000);
+    let bodyRequest: AuthProps = {
+      email,
+      password,
+    };
+    dispatch(authRequest(bodyRequest));
   };
 
   const onGoRegister = () => {
@@ -42,6 +49,28 @@ const LoginScreen = (props: any) => {
         name: Pages.registerScreen.name,
       },
     });
+  };
+
+  useEffect(() => {
+    if (!isEmpty(authData.data)) {
+      setTimeout(() => {
+        setIsLoading(authData.isLoading);
+        setTabsRoot();
+      }, 2000);
+    } else if (authData.status === 403) {
+      setTimeout(() => {
+        setIsLoading(authData.isLoading);
+        showErrorMessage();
+      }, 2000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authData]);
+
+  const showErrorMessage = () => {
+    Alert.alert('Authentication', authData.error, [
+      {text: 'OK', onPress: () => {}},
+    ]);
+    dispatch(clearAuthState());
   };
 
   useEffect(() => {
@@ -82,6 +111,7 @@ const LoginScreen = (props: any) => {
           )}
           onChangeText={setEmail}
           style={styles.textInput}
+          autoCapitalize={'none'}
         />
 
         <TextInput
@@ -92,14 +122,14 @@ const LoginScreen = (props: any) => {
             },
             language,
           )}
-          onChangeText={setEmail}
+          onChangeText={setPassword}
           style={styles.textInput}
+          secureTextEntry={true}
+          autoCapitalize={'none'}
         />
 
-        <TouchableOpacity style={styles.btnLogin}>
-          <Text
-            style={{...styles.textTitle, color: Colors.white}}
-            onPress={onLogin}>
+        <TouchableOpacity style={styles.btnLogin} onPress={onLogin}>
+          <Text style={{...styles.textTitle, color: Colors.white}}>
             {translate(
               {
                 en: 'LOGIN',
@@ -202,9 +232,9 @@ const styles = StyleSheet.create({
   textInput: {
     paddingHorizontal: 10,
     paddingVertical: 15,
-    borderRadius: 3,
+    borderRadius: 5,
     borderWidth: 0.5,
-    borderColor: Colors.darkGray,
+    borderColor: Colors.lightGrey,
     marginBottom: 15,
   },
   textTitle: {

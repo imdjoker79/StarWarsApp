@@ -1427,6 +1427,13 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
+"@types/ramda@^0.28.1":
+  version "0.28.1"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.28.1.tgz#49766d1475bcb00ef8cc463a6b65484e50236547"
+  integrity sha512-8wnJK5aPaGL7AYhQSe7olwxjhIB9GO4GOCxd6JjYlVNe128DHJDOu7Kyve4kx4uazeKJdnOS3N5TVRv0z1bb1g==
+  dependencies:
+    ts-toolbelt "^6.15.1"
+
 "@types/react-native-svg-charts@^5.0.12":
   version "5.0.12"
   resolved "https://registry.yarnpkg.com/@types/react-native-svg-charts/-/react-native-svg-charts-5.0.12.tgz#571c2207383c395047a8ae424dc37284593d96f0"
@@ -1478,9 +1485,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^17":
-  version "17.0.39"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.39.tgz#d0f4cde092502a6db00a1cded6e6bf2abb7633ce"
-  integrity sha512-UVavlfAxDd/AgAacMa60Azl7ygyQNRwC/DsHZmKgNvPmRR5p70AJ5Q9EAmL2NWOJmeV+vVUI4IAP7GZrN8h8Ug==
+  version "17.0.40"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.40.tgz#dc010cee6254d5239a138083f3799a16638e6bad"
+  integrity sha512-UrXhD/JyLH+W70nNSufXqMZNuUD2cXHu6UjCllC6pmOQgBX4SGXOH8fjRka0O0Ee0HrFxapDD8Bwn81Kmiz6jQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1767,9 +1774,9 @@ ansi-fragments@^0.2.1:
     strip-ansi "^5.0.0"
 
 ansi-regex@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-4.1.0.tgz#8b9f8f08cf1acb843756a839ca8c7e3168c51997"
-  integrity sha512-1apePfXM1UOSqw0o9IiFAovVz9M5S1Dg+4TrDwfMewQ6p/rmMueb7tWZjQ1rx4Loy1ArBggoqGpfqqdI4rondg==
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-4.1.1.tgz#164daac87ab2d6f6db3a29875e2d1766582dabed"
+  integrity sha512-ILlv4k/3f6vfQ4OoP2AGvirOktlQ98ZEL1k9FaQjxa3L1abBgbuTDAdPOpvbGncC0BTVQrl+OM8xZGK6tWXt7g==
 
 ansi-regex@^5.0.0, ansi-regex@^5.0.1:
   version "5.0.1"
@@ -2269,9 +2276,9 @@ camelcase@^6.0.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001313:
-  version "1.0.30001313"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001313.tgz#a380b079db91621e1b7120895874e2fd62ed2e2f"
-  integrity sha512-rI1UN0koZUiKINjysQDuRi2VeSCce3bYJNmDcj3PIKREiAmjakugBul1QSkg/fPrlULYl6oWfGg3PbgOSY9X4Q==
+  version "1.0.30001314"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001314.tgz#65c7f9fb7e4594fca0a333bec1d8939662377596"
+  integrity sha512-0zaSO+TnCHtHJIbpLroX7nsD+vYuOVjl3uzFbJO1wMVbuveJA0RK2WcQA9ZUIOiO0/ArMiMgHJLxfEZhQiC0kw==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -2861,9 +2868,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.4.76:
-  version "1.4.76"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.76.tgz#a0494baedaf51094b1c172999919becd9975a934"
-  integrity sha512-3Vftv7cenJtQb+k00McEBZ2vVmZ/x+HEF7pcZONZIkOsESqAqVuACmBxMv0JhzX7u0YltU0vSqRqgBSTAhFUjA==
+  version "1.4.82"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.82.tgz#51e123ca434b1eba8c434ece2b54f095b304a651"
+  integrity sha512-Ks+ANzLoIrFDUOJdjxYMH6CMKB8UQo5modAwvSZTxgF+vEs/U7G5IbWFUp6dS4klPkTDVdxbORuk8xAXXhMsWw==
 
 emittery@^0.7.1:
   version "0.7.2"
@@ -5867,6 +5874,11 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
+ramda@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.28.0.tgz#acd785690100337e8b063cab3470019be427cc97"
+  integrity sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==
+
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
@@ -6954,6 +6966,11 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha1-gYT9NH2snNwYWZLzpmIuFLnZq2o=
+
+ts-toolbelt@^6.15.1:
+  version "6.15.5"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-6.15.5.tgz#cb3b43ed725cb63644782c64fbcad7d8f28c0a83"
+  integrity sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==
 
 tslib@1.9.3:
   version "1.9.3"

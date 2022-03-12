@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {windowWidth} from '@common/const';
 import {Colors} from '@common/colors';
 import ListItem from '@components/ListItem';
@@ -14,33 +14,45 @@ import {setAuthRoot} from '../../navigators/roots';
 import LoaderModal from '../../components/LoaderModal';
 import CustomModal from '../../components/CustomModal';
 import translate from '../../helpers/translator';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../store';
+import {AuthProps} from '../../interfaces';
+import {clearAuthState} from '../../redux/auth/login';
+import {isEmpty} from 'ramda';
 
 interface ProfileScreenProps {
   isParentScreen?: boolean;
 }
 
 const ProfileScreen = ({isParentScreen = true}: ProfileScreenProps) => {
+  const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
+  const authData = useSelector((state: RootState) => state.auth);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isWantSignOut, setIsWantSignOut] = useState<boolean>(false);
 
   const onSignOut = () => {
-    setIsWantSignOut(false);
-    setTimeout(() => {
-      setIsLoading(true);
-      setTimeout(() => {
-        setAuthRoot();
-        setIsLoading(false);
-      }, 1000);
-    }, 500);
+    console.log('logout');
+    dispatch(clearAuthState());
   };
 
   const onAskSignOut = () => {
     setIsWantSignOut(true);
   };
+
+  useEffect(() => {
+    setIsWantSignOut(false);
+    if (isEmpty(authData.data) && isParentScreen) {
+      setTimeout(() => {
+        setIsLoading(true);
+        setTimeout(() => {
+          setAuthRoot();
+          setIsLoading(false);
+        }, 1000);
+      }, 500);
+    }
+  }, [authData, isParentScreen]);
 
   return (
     <View style={styles.container}>

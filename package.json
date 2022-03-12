@@ -16,8 +16,10 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.16.1",
     "@reduxjs/toolkit": "^1.8.0",
+    "@types/ramda": "^0.28.1",
     "@types/react-native-svg-charts": "^5.0.12",
     "@types/react-native-vector-icons": "^6.4.10",
+    "ramda": "^0.28.0",
     "react": "17.0.2",
     "react-native": "0.67.3",
     "react-native-gesture-handler": "^2.3.1",
