@@ -19,8 +19,10 @@ export const authRequest = createAsyncThunk(
     try {
       let data = store.getState().register.data;
       let response = data.find(
-        el => el === body.email && el.password === body.password,
+        el => el.email === body.email && el.password === body.password,
       );
+      // console.log(response);
+      // console.log(data);
       if (!validateEmail(body.email!)) {
         return thunkData.rejectWithValue(
           translate(
@@ -54,7 +56,7 @@ export const authRequest = createAsyncThunk(
           ),
         );
       }
-    } catch (error) {
+    } catch (_) {
       return thunkData.rejectWithValue(
         translate(
           {
@@ -76,6 +78,11 @@ export const authSlice = createSlice({
       state.status = 0;
       state.data = {};
       state.error = '';
+      state.isLoading = false;
+      return state;
+    },
+    clearLoadingState: state => {
+      state.isLoading = false;
       return state;
     },
   },

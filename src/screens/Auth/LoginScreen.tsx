@@ -47,6 +47,11 @@ const LoginScreen = (props: any) => {
       component: {
         id: Pages.registerScreen.id,
         name: Pages.registerScreen.name,
+        // id: Pages.createGroupScreen.id,
+        // name: Pages.createGroupScreen.name,
+        // passProps: {
+        //   params: 'Params',
+        // },
       },
     });
   };
@@ -54,12 +59,12 @@ const LoginScreen = (props: any) => {
   useEffect(() => {
     if (!isEmpty(authData.data)) {
       setTimeout(() => {
-        setIsLoading(authData.isLoading);
+        setIsLoading(authData.isLoading!);
         setTabsRoot();
       }, 2000);
     } else if (authData.status === 403) {
       setTimeout(() => {
-        setIsLoading(authData.isLoading);
+        setIsLoading(authData.isLoading!);
         showErrorMessage();
       }, 2000);
     }
@@ -67,9 +72,17 @@ const LoginScreen = (props: any) => {
   }, [authData]);
 
   const showErrorMessage = () => {
-    Alert.alert('Authentication', authData.error, [
-      {text: 'OK', onPress: () => {}},
-    ]);
+    Alert.alert(
+      translate(
+        {
+          en: 'Authentication',
+          id: 'Auntentikasi',
+        },
+        language,
+      ),
+      authData.error,
+      [{text: 'OK', onPress: () => {}}],
+    );
     dispatch(clearAuthState());
   };
 

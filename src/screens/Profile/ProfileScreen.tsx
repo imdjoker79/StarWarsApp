@@ -4,36 +4,40 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import {isEmpty} from 'ramda';
+
 import {windowWidth} from '@common/const';
 import {Colors} from '@common/colors';
 import ListItem from '@components/ListItem';
-import {Navigation} from 'react-native-navigation';
-import {setAuthRoot} from '../../navigators/roots';
-import LoaderModal from '../../components/LoaderModal';
-import CustomModal from '../../components/CustomModal';
-import translate from '../../helpers/translator';
+import {setAuthRoot} from '@navigators/roots';
+import LoaderModal from '@components/LoaderModal';
+import CustomModal from '@components/CustomModal';
+import translate from '@helpers/translator';
 import {useDispatch, useSelector} from 'react-redux';
+import {DataUserItem} from '@interfaces/index';
+import {clearAuthState} from '@redux/auth/login';
+import {fetchDetailUser} from '@redux/user/user';
 import {RootState} from '../../store';
-import {AuthProps} from '../../interfaces';
-import {clearAuthState} from '../../redux/auth/login';
-import {isEmpty} from 'ramda';
 
 interface ProfileScreenProps {
   isParentScreen?: boolean;
+  data?: DataUserItem;
 }
 
-const ProfileScreen = ({isParentScreen = true}: ProfileScreenProps) => {
+const ProfileScreen = ({isParentScreen = true, data}: ProfileScreenProps) => {
   const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
   const authData = useSelector((state: RootState) => state.auth);
+
+  const userData = useSelector((state: RootState) => state.user);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isWantSignOut, setIsWantSignOut] = useState<boolean>(false);
 
   const onSignOut = () => {
-    console.log('logout');
     dispatch(clearAuthState());
   };
 
@@ -53,6 +57,14 @@ const ProfileScreen = ({isParentScreen = true}: ProfileScreenProps) => {
       }, 500);
     }
   }, [authData, isParentScreen]);
+
+  useEffect(() => {
+    dispatch(fetchDetailUser());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   console.log(userData);
+  // }, [userData]);
 
   return (
     <View style={styles.container}>
@@ -87,22 +99,58 @@ const ProfileScreen = ({isParentScreen = true}: ProfileScreenProps) => {
       <ScrollView>
         <View style={styles.headerContainer}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarPlaceholder}>LS</Text>
+            {/* <Text style={styles.avatarPlaceholder}>LS</Text> */}
+            <Image
+              style={styles.avatar}
+              source={{uri: 'https://randomuser.me/api/portraits/men/1.jpg'}}
+            />
           </View>
-          <Text style={styles.userName}>Luke Skywalker</Text>
+          <Text style={styles.userName}>
+            {isParentScreen
+              ? userData.data.name
+              : `${data?.firstName} ${data?.lastName}`}
+          </Text>
         </View>
         <View style={styles.contentContainer}>
-          <ListItem title={'Email'} />
+          <ListItem
+            title={'Email'}
+            subtitle={isParentScreen ? authData.data.email : data?.email}
+          />
           <View style={styles.inputSeparatorXS} />
-          <ListItem title={'Fist Name'} />
-          <View style={styles.inputSeparatorXS} />
-          <ListItem title={'Last Name'} />
-          <View style={styles.inputSeparatorLG} />
-          <ListItem title={'Password'} />
-          <View style={styles.inputSeparatorXS} />
-          <ListItem title={'Confirm Password'} />
-          <View style={styles.inputSeparatorSM} />
-          <ListItem title={'Job Title'} />
+          {isParentScreen ? (
+            <>
+              <ListItem title={'Name'} subtitle={userData.data?.name ?? '-'} />
+              <View style={styles.inputSeparatorLG} />
+              <ListItem
+                title={'Height'}
+                subtitle={userData.data?.height ?? '-'}
+              />
+              <View style={styles.inputSeparatorXS} />
+              <ListItem title={'Mass'} subtitle={userData.data?.mass ?? '-'} />
+              <View style={styles.inputSeparatorXS} />
+              <ListItem
+                title={'Birth year'}
+                subtitle={userData.data?.birth_year ?? '-'}
+              />
+              <View style={styles.inputSeparatorXS} />
+              <ListItem
+                title={'Gender'}
+                subtitle={userData.data?.gender ?? '-'}
+              />
+            </>
+          ) : (
+            <>
+              <ListItem title={'Fist Name'} subtitle={data?.firstName} />
+              <View style={styles.inputSeparatorXS} />
+              <ListItem title={'Last Name'} subtitle={data?.lastName} />
+              <View style={styles.inputSeparatorLG} />
+              <ListItem title={'Password'} subtitle={'*****'} />
+              <View style={styles.inputSeparatorXS} />
+              <ListItem title={'Confirm Password'} subtitle={'*****'} />
+              <View style={styles.inputSeparatorSM} />
+              <ListItem title={'Job Title'} subtitle={data?.jobTitle} />
+            </>
+          )}
         </View>
         {isParentScreen && (
           <View style={styles.logoutContainer}>

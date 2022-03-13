@@ -5,49 +5,149 @@ import {
   TextInput,
   View,
   ScrollView,
-  TouchableOpacity,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import React, {useEffect, useState} from 'react';
 import Entypo from 'react-native-vector-icons/Entypo';
 import translate from '@helpers/translator';
 import {Colors} from '@common/colors';
-import {RootState, store} from '../../store';
 import {isIos, windowWidth} from '@common/const';
 import TextInputCustom from '@components/TextInputCustom';
 import {Navigation} from 'react-native-navigation';
-import {Pages} from '@navigators/constants/allPages';
-import GroupMemberItem from '../../components/GroupMemberItem';
-import {DataUserItem} from '../../interfaces';
-import {setTabsRoot} from '../../navigators/roots';
+import GroupMemberItem from '@components/GroupMemberItem';
+import {RootState, store} from '../../store';
+import {
+  AuthProps,
+  DataGroupItem,
+  DataUserItem,
+  GroupBodyProps,
+  UpdateGroupIdBodyProps,
+} from '@interfaces/index';
+import {isEmpty} from 'ramda';
+import acronym from '@helpers/acronym';
+import {
+  clearGroupLoading,
+  clearGroupStatusState,
+  createGroup,
+} from '@redux/group/group';
+import uid from '@helpers/uuidGenerator';
+import LoaderModal from '@components/LoaderModal';
+import {updateGroupIDUser} from '@redux/auth/register';
+import {authRequest} from '@redux/auth/login';
 
 const CreateGroup = (props: any) => {
+  const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
+  const registerData = useSelector((state: RootState) => state.register);
+  const groupData = useSelector((state: RootState) => state.group);
 
-  const [groupName, setGroupName] = useState<string>();
-  const [descriptionGroup, setDescriptionGroup] = useState<string>();
+  const [groupName, setGroupName] = useState<string>('');
+  const [groupDescription, setGroupDescription] = useState<string>('');
 
-  const [data] = useState<DataUserItem[]>([
-    {
-      firstName: 'Luke',
-      lastName: 'Skywalker',
-      imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-    },
-    {
-      firstName: 'Luke',
-      lastName: 'Skywalker',
-      imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-    },
-  ]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onInvitMember = () => {
-    Navigation.push(props.componentId, {
-      component: {
-        id: Pages.inviteMemberScreen.id,
-        name: Pages.inviteMemberScreen.name,
-      },
-    });
+  const temMember: DataUserItem[] = [];
+
+  const onSavedCreateGroup = async () => {
+    if (isEmpty(groupName) && isEmpty(groupDescription)) {
+      Alert.alert(
+        translate(
+          {
+            en: 'Validation',
+            id: 'Validasi',
+          },
+          language,
+        ),
+        translate(
+          {
+            en: "Group name or description can't empty ",
+            id: 'Nama grub dan deskripsi tidak boleh kosong',
+          },
+          language,
+        ),
+        [{text: 'OK', onPress: () => {}}],
+      );
+    } else {
+      setIsLoading(true);
+      let tempData: DataGroupItem = {
+        id: await uid(),
+        title: groupName,
+        description: groupDescription,
+        member: temMember,
+      };
+
+      let body: GroupBodyProps = {
+        body: tempData,
+      };
+
+      dispatch(createGroup(body));
+
+      setTimeout(() => {
+        temMember.forEach((el: DataUserItem) => {
+          let bodyUpdateGroupId: UpdateGroupIdBodyProps = {
+            idGroup: tempData.id,
+            idUser: el.id,
+          };
+          dispatch(updateGroupIDUser(bodyUpdateGroupId));
+        });
+      }, 700);
+    }
   };
+
+  const onClickAddMember = (el: DataUserItem) => {
+    temMember.push(el);
+  };
+
+  useEffect(() => {
+    let params = props.params;
+    if (!isEmpty(params)) {
+      let currentUser: DataUserItem = {
+        id: params.id,
+        groupId: params.groupId,
+        email: params.email,
+        firstName: params.firstName,
+        lastName: params.lastName,
+        password: params.lastName,
+        jobTitle: params.lastName,
+        imageUrl: params.lastName,
+      };
+      temMember.push(currentUser);
+    }
+  }, [props, temMember]);
+
+  useEffect(() => {
+    if (groupData.status === 200) {
+      setTimeout(() => {
+        let bodyRequest: AuthProps = {
+          email: props.params?.email,
+          password: props.params?.password,
+        };
+        dispatch(authRequest(bodyRequest));
+        setIsLoading(false);
+      }, 1000);
+      dispatch(clearGroupStatusState());
+    } else if (groupData.status === 403) {
+      if (isIos) {
+        Alert.alert(
+          translate(
+            {
+              en: 'Validation',
+              id: 'Validasi',
+            },
+            language,
+          ),
+          registerData.message,
+          [{text: 'OK', onPress: () => {}}],
+        );
+      } else {
+        ToastAndroid.show(registerData.message, ToastAndroid.SHORT);
+      }
+      dispatch(clearGroupLoading());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupData]);
 
   useEffect(() => {
     const navigationButtonEventListener =
@@ -61,25 +161,25 @@ const CreateGroup = (props: any) => {
     return () => {
       navigationButtonEventListener.remove();
     };
-  }, []);
-
-  const onSavedCreateGroup = () => {
-    setTimeout(() => {
-      setTabsRoot();
-    }, 700);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupName, groupDescription, temMember]);
 
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={70}
       behavior={isIos ? 'padding' : 'height'}
       style={styles.container}>
+      <LoaderModal visible={isLoading} />
       <ScrollView contentContainerStyle={styles.contentContainerStyle}>
         <View style={[styles.avatarContainer, styles.spacer]}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarPlaceholder}>GM</Text>
+            <Text style={styles.avatarPlaceholder}>
+              {isEmpty(groupName) ? acronym('Group Name') : acronym(groupName)}
+            </Text>
           </View>
-          <Text style={styles.groupName}>Group Name</Text>
+          <Text style={styles.groupName}>
+            {isEmpty(groupName) ? 'Group Name' : groupName}
+          </Text>
         </View>
         <View style={styles.inputContainer}>
           <TextInputCustom
@@ -127,15 +227,13 @@ const CreateGroup = (props: any) => {
               )}
               multiline={true}
               numberOfLines={4}
-              onChangeText={setDescriptionGroup}
+              onChangeText={setGroupDescription}
             />
           </View>
 
-          <View style={{marginTop: 15}}>
-            <TouchableOpacity
-              onPress={onInvitMember}
-              style={styles.headerSection}>
-              <Text style={{...styles.sectionTitle, color: Colors.primary}}>
+          <View style={styles.spacerSM}>
+            <View style={styles.headerSection}>
+              <Text style={{...styles.sectionTitle}}>
                 {translate(
                   {
                     en: 'Invite member',
@@ -149,18 +247,19 @@ const CreateGroup = (props: any) => {
                 size={15}
                 color={Colors.darkGray}
               />
-            </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.listUserContainer}>
-            {data.map((e: DataUserItem, index: number) => (
-              <GroupMemberItem
-                key={index}
-                firstName={e.firstName}
-                lastName={e.lastName}
-                imageUrl={e.imageUrl}
-              />
-            ))}
+            {registerData.data
+              .filter(el => el.id !== props.params?.id)
+              .map((e: DataUserItem, index: number) => (
+                <GroupMemberItem
+                  key={index}
+                  data={e}
+                  onClick={onClickAddMember}
+                />
+              ))}
           </View>
         </View>
       </ScrollView>
@@ -256,5 +355,9 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontWeight: '500',
     color: Colors.darkGray,
+    fontSize: 15,
+  },
+  spacerSM: {
+    marginTop: 15,
   },
 });

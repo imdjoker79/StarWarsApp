@@ -1,15 +1,41 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {DataUserItem} from '../interfaces';
 import {Colors} from '../common/colors';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const GroupMemberItem = (props: DataUserItem) => {
+interface GroupMemberItemProps {
+  data: DataUserItem;
+  buttonType?: 'add' | 'delete';
+  onClick: (el: DataUserItem) => void;
+}
+
+const GroupMemberItem = ({
+  data,
+  buttonType = 'add',
+  onClick,
+}: GroupMemberItemProps) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.avatar} source={{uri: props.imageUrl}} />
-      <Text style={styles.name}>
-        {props.firstName} {props.lastName}
-      </Text>
+      <View style={styles.content}>
+        <Image
+          style={styles.avatar}
+          source={{
+            uri: 'https://randomuser.me/api/portraits/men/1.jpg',
+            // data?.imageUrl ?? 'https://randomuser.me/api/portraits/men/1.jpg',
+          }}
+        />
+        <Text style={styles.name}>
+          {data?.firstName} {data?.lastName}
+        </Text>
+      </View>
+      <TouchableOpacity onPress={() => onClick(data)} style={styles.btn}>
+        <FontAwesome
+          name={buttonType === 'add' ? 'plus-circle' : 'trash'}
+          size={25}
+          color={buttonType === 'add' ? Colors.green : Colors.red}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -21,8 +47,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 25,
     flexDirection: 'row',
-    backgroundColor: Colors.white,
     alignItems: 'center',
+    backgroundColor: Colors.white,
+    justifyContent: 'space-between',
+  },
+  content: {
+    flexDirection: 'row',
   },
   avatar: {
     width: 35,
@@ -31,8 +61,11 @@ const styles = StyleSheet.create({
   },
   name: {
     marginLeft: 10,
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '500',
     color: Colors.darkGray,
+  },
+  btn: {
+    paddingHorizontal: 10,
   },
 });
