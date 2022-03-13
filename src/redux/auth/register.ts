@@ -1,5 +1,9 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {DataUser, RegisterBodyProps} from '@interfaces/index';
+import {
+  DataUser,
+  RegisterBodyProps,
+  UpdateGroupIdBodyProps,
+} from '@interfaces/index';
 import validateEmail from '../../helpers/validator';
 import translate from '../../helpers/translator';
 import {store} from '../../store';
@@ -75,8 +79,34 @@ export const registerRequest = createAsyncThunk(
       } else {
         return body;
       }
-    } catch (error) {
+    } catch (_) {
       return thunkData.rejectWithValue('Failed register');
+    }
+  },
+);
+
+export const updateGroupIDUser = createAsyncThunk(
+  'UPDATE_USER_GROUP_ID',
+  async (body: UpdateGroupIdBodyProps, thunkData) => {
+    const language = store.getState().language;
+    const dataUser = store.getState().register;
+    try {
+      let findIndex = dataUser.data.findIndex(el => body.idUser === el.id);
+      let tempData = {
+        index: findIndex,
+        body,
+      };
+      return tempData;
+    } catch (_) {
+      return thunkData.rejectWithValue(
+        translate(
+          {
+            en: 'Failed to update user group',
+            id: 'Gagal mengubah data grub pengguna',
+          },
+          language,
+        ),
+      );
     }
   },
 );
@@ -85,15 +115,27 @@ export const registerSlice = createSlice({
   name: 'register',
   initialState,
   reducers: {
-    clearRegisterState: state => {
+    clearRegisterLoadingState: state => {
+      state.status = 0;
+      state.isLoading = false;
+      return state;
+    },
+    clearStatusState: state => {
       state.status = 0;
       return state;
+    },
+    clearRegisterState: state => {
+      state.status = 0;
+      state.message = '';
+      state.data = [];
+      state.isLoading = false;
     },
   },
   extraReducers: builder => {
     builder.addCase(registerRequest.fulfilled, (state: DataUser, action) => {
       state.status = 200;
       state.message = 'Ok';
+      state.isLoading = false;
       state.data.push(action.payload);
     });
     builder.addCase(registerRequest.pending, state => {
@@ -104,9 +146,17 @@ export const registerSlice = createSlice({
       state.isLoading = false;
       state.message = action.payload;
     });
+    //update user group ID
+
+    builder.addCase(updateGroupIDUser.fulfilled, (state, action) => {
+      state.data[action.payload.index].groupId = action.payload.body.idGroup;
+    });
+    // builder.addCase(updateGroupIDUser.pending, (state, action) => {});
+    // builder.addCase(updateGroupIDUser.rejected, (state, action) => {});
   },
 });
 
-export const {clearRegisterState} = registerSlice.actions;
+export const {clearRegisterState, clearStatusState, clearRegisterLoadingState} =
+  registerSlice.actions;
 
 export default registerSlice.reducer;

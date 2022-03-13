@@ -7,15 +7,22 @@ import translate from '../../helpers/translator';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store';
 import {setTabsRoot} from '../../navigators/roots';
+import {isEmpty} from 'ramda';
 
 const SplashScreen: NavigationFunctionComponent = () => {
   const language = useSelector((state: RootState) => state.language);
+  const authData = useSelector((state: RootState) => state.auth);
   useEffect(() => {
-    setTimeout(() => {
-      setAuthRoot();
-      // setTabsRoot();
-    }, 2000);
-  }, []);
+    if (!isEmpty(authData.data)) {
+      setTimeout(() => {
+        setTabsRoot();
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        setAuthRoot();
+      }, 2000);
+    }
+  }, [authData]);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>

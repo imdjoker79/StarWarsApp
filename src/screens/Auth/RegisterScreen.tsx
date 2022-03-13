@@ -21,8 +21,13 @@ import CustomModal from '@components/CustomModal';
 import {setAuthRoot} from '@navigators/roots';
 import LoaderModal from '@components/LoaderModal';
 import {RootState, store} from '../../store';
-import {clearRegisterState, registerRequest} from '@redux/auth/register';
-import {RegisterBodyProps} from '@interfaces/index';
+import {
+  clearRegisterLoadingState,
+  clearStatusState,
+  registerRequest,
+} from '@redux/auth/register';
+import {DataUserItem, RegisterBodyProps} from '@interfaces/index';
+import uid from '@helpers/uuidGenerator';
 
 const RegisterScreen = (props: any) => {
   const dispatch = useDispatch();
@@ -37,18 +42,25 @@ const RegisterScreen = (props: any) => {
   const [jobTitle, setJobTitle] = useState<string>('');
   const [savedAccount, setSavedAccount] = useState(false);
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
+  const [tempData, setTempData] = useState<DataUserItem>({});
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onSaveRegister = () => {
-    let bodyRequest: RegisterBodyProps = {
-      email,
+  var bodyRequest: RegisterBodyProps = {};
+
+  const onSaveRegister = async () => {
+    bodyRequest = {
+      id: await uid(),
+      groupId: null,
+      email: email.toLowerCase(),
       firstName,
       lastName,
       password,
       jobTitle,
-      imageUrl: '',
+      imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
       confirmPassword,
     };
+    setTempData(bodyRequest);
     dispatch(registerRequest(bodyRequest));
   };
 
@@ -59,6 +71,9 @@ const RegisterScreen = (props: any) => {
         component: {
           id: Pages.createGroupScreen.id,
           name: Pages.createGroupScreen.name,
+          passProps: {
+            params: tempData,
+          },
         },
       });
     }, 500);
@@ -81,15 +96,24 @@ const RegisterScreen = (props: any) => {
           setVisibleModal(true);
         }, 700);
       }, 1000);
+      dispatch(clearStatusState());
     } else if (registerData.status === 403) {
       if (isIos) {
-        Alert.alert('Validation', registerData.message, [
-          {text: 'OK', onPress: () => {}},
-        ]);
+        Alert.alert(
+          translate(
+            {
+              en: 'Validation',
+              id: 'Validasi',
+            },
+            language,
+          ),
+          registerData.message,
+          [{text: 'OK', onPress: () => {}}],
+        );
       } else {
         ToastAndroid.show(registerData.message, ToastAndroid.SHORT);
       }
-      dispatch(clearRegisterState());
+      dispatch(clearRegisterLoadingState());
     }
   }, [registerData]);
 
@@ -114,7 +138,7 @@ const RegisterScreen = (props: any) => {
       style={styles.container}>
       <LoaderModal visible={isLoading} />
       {savedAccount ? (
-        <ProfileScreen isParentScreen={false} />
+        <ProfileScreen isParentScreen={false} data={tempData} />
       ) : (
         <View style={styles.container}>
           <ScrollView contentContainerStyle={styles.contentContainerStyle}>
