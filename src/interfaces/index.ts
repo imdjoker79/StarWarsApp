@@ -28,7 +28,7 @@ export interface DataUserItem {
   password?: string;
   jobTitle?: string;
   imageUrl?: string;
-  groupId?: string | null;
+  groupId?: string[];
 }
 
 export interface RegisterBodyProps extends DataUserItem {

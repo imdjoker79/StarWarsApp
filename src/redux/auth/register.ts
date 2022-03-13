@@ -149,7 +149,9 @@ export const registerSlice = createSlice({
     //update user group ID
 
     builder.addCase(updateGroupIDUser.fulfilled, (state, action) => {
-      state.data[action.payload.index].groupId = action.payload.body.idGroup;
+      state.data[action.payload.index].groupId?.push(
+        action.payload.body.idGroup,
+      );
     });
     // builder.addCase(updateGroupIDUser.pending, (state, action) => {});
     // builder.addCase(updateGroupIDUser.rejected, (state, action) => {});
