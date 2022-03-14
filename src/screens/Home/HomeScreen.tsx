@@ -57,9 +57,9 @@ const HomeScreen = (props: any) => {
     });
   }, [language, props.componentId]);
 
-  useEffect(() => {
-    console.log('DATA    ', dataUser);
-  }, [dataUser]);
+  // useEffect(() => {
+  //   console.log('DATA    ', dataUser);
+  // }, [dataUser]);
 
   return (
     <ScrollView

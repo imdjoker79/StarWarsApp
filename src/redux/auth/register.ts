@@ -3,7 +3,6 @@ import {
   DataUser,
   RegisterBodyProps,
   UpdateGroupIdBodyProps,
-  UpdateImageProfileBodyProps,
 } from '@interfaces/index';
 import validateEmail from '../../helpers/validator';
 import translate from '../../helpers/translator';
