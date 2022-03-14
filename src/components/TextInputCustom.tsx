@@ -10,6 +10,7 @@ interface TextInputCustomProps {
   secureText?: boolean;
   onChange: (val: string) => void;
   errorMessage?: string;
+  keyboardType?: 'email-address' | 'default';
 }
 
 const TextInputCustom = ({
@@ -18,6 +19,7 @@ const TextInputCustom = ({
   onChange,
   autoCapitalize = 'words',
   secureText = false,
+  keyboardType = 'default',
 }: TextInputCustomProps) => {
   return (
     <View style={styles.inputWrapper}>
@@ -27,8 +29,10 @@ const TextInputCustom = ({
           style={styles.input}
           placeholder={placeholder}
           onChangeText={onChange}
+          textAlign={'right'}
           autoCapitalize={autoCapitalize}
           secureTextEntry={secureText}
+          keyboardType={keyboardType}
         />
         <Entypo name={'chevron-thin-right'} size={15} color={Colors.darkGray} />
       </View>

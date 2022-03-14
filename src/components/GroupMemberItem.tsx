@@ -8,12 +8,14 @@ interface GroupMemberItemProps {
   data: DataUserItem;
   buttonType?: 'add' | 'delete';
   onClick: (el: DataUserItem) => void;
+  isCurrentUser?: boolean;
 }
 
 const GroupMemberItem = ({
   data,
   buttonType = 'add',
   onClick,
+  isCurrentUser = false,
 }: GroupMemberItemProps) => {
   return (
     <View style={styles.container}>
@@ -21,21 +23,22 @@ const GroupMemberItem = ({
         <Image
           style={styles.avatar}
           source={{
-            uri: 'https://randomuser.me/api/portraits/men/1.jpg',
-            // data?.imageUrl ?? 'https://randomuser.me/api/portraits/men/1.jpg',
+            uri: data.imageUrl,
           }}
         />
         <Text style={styles.name}>
           {data?.firstName} {data?.lastName}
         </Text>
       </View>
-      <TouchableOpacity onPress={() => onClick(data)} style={styles.btn}>
-        <FontAwesome
-          name={buttonType === 'add' ? 'plus-circle' : 'trash'}
-          size={25}
-          color={buttonType === 'add' ? Colors.green : Colors.red}
-        />
-      </TouchableOpacity>
+      {!isCurrentUser && (
+        <TouchableOpacity onPress={() => onClick(data)} style={styles.btn}>
+          <FontAwesome
+            name={buttonType === 'add' ? 'plus-circle' : 'trash'}
+            size={25}
+            color={buttonType === 'add' ? Colors.green : Colors.red}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

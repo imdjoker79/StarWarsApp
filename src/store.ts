@@ -14,6 +14,7 @@ import authReducer from '@redux/auth/login';
 import registerReducer from '@redux/auth/register';
 import groupReducer from '@redux/group/group';
 import userReducer from '@redux/user/user';
+import starshipReducer from '@redux/starship/index';
 
 export const rootReducers = combineReducers({
   language: languageReducer,
@@ -21,6 +22,7 @@ export const rootReducers = combineReducers({
   auth: authReducer,
   group: groupReducer,
   user: userReducer,
+  starship: starshipReducer,
 });
 
 const middleware = [thunk];

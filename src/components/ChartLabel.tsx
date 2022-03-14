@@ -7,7 +7,7 @@ export const ChartLabel = (props: Partial<LabelsProps>) => {
   return (
     <>
       {slices.map((slice: any, index: number) => {
-        const {labelCentroid, pieCentroid, data, key} = slice;
+        const {labelCentroid, pieCentroid, data} = slice;
         return (
           <G key={index}>
             <G x={pieCentroid[0]} y={pieCentroid[1]}>
@@ -34,7 +34,7 @@ export const ChartLabel = (props: Partial<LabelsProps>) => {
                 fill={data.svg.fill}
                 textAnchor={'middle'}
                 alignmentBaseline={'middle'}
-                fontSize={11}
+                fontSize={12}
                 fontWeight={'600'}
                 stroke={'white'}
                 opacity={'1'}

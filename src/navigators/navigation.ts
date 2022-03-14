@@ -9,7 +9,6 @@ import SplashScreen from '@screens/Splash/SplashScreen';
 import LoginScreen from '@screens/Auth/LoginScreen';
 import RegisterScreen from '@screens/Auth/RegisterScreen';
 import InviteMember from '@screens/Group/InviteMember';
-import GroupScreen from '@screens/Group/GroupScreen';
 import ProfileScreen from '@screens/Profile/ProfileScreen';
 import HomeScreen from '@screens/Home/HomeScreen';
 import {WrappedComponent} from '../wrapper';
@@ -132,11 +131,6 @@ export function registerComponent() {
     Pages.homeScreen.name,
     () => WrappedComponent(HomeScreen),
     () => HomeScreen,
-  );
-  Navigation.registerComponent(
-    Pages.groupScreen.name,
-    () => WrappedComponent(GroupScreen),
-    () => GroupScreen,
   );
   Navigation.registerComponent(
     Pages.profileScreen.name,

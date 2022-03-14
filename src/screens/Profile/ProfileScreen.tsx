@@ -24,8 +24,8 @@ import {clearAuthState, clearSuccessImageState} from '@redux/auth/login';
 import {fetchDetailUser} from '@redux/user/user';
 import {RootState} from '../../store';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {updateImageUser} from '../../redux/auth/login';
+import {launchCamera} from 'react-native-image-picker';
+import {updateImageUser} from '@redux/auth/login';
 
 interface ProfileScreenProps {
   isParentScreen?: boolean;
@@ -55,20 +55,21 @@ const ProfileScreen = ({
   };
 
   const onAddImage = async () => {
-    const result: any = await launchImageLibrary({
+    const result: any = await launchCamera({
       mediaType: 'photo',
     });
+    console.log(result);
     if (result) {
       //update from profile
       if (isParentScreen) {
         if (isIos) {
           onUpdateImage(result?.assets[0]?.uri);
         } else {
-          console.log(result);
+          onUpdateImage(result?.assets[0]?.uri);
         }
       } else {
-        //from register
         getImagePicker!(result);
+        //from register
       }
     } else {
       if (isIos) {
@@ -138,8 +139,7 @@ const ProfileScreen = ({
 
   useEffect(() => {
     dispatch(fetchDetailUser(authData.data.firstName!));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authData]);
+  }, [authData, dispatch]);
 
   return (
     <View style={styles.container}>
@@ -203,43 +203,132 @@ const ProfileScreen = ({
           <View style={styles.inputSeparatorXS} />
           {isParentScreen ? (
             <>
-              <ListItem title={'Name'} subtitle={userData.data?.name ?? '-'} />
+              <ListItem
+                title={translate(
+                  {
+                    en: 'Name',
+                    id: 'Nama',
+                  },
+                  language,
+                )}
+                subtitle={userData.data?.name ?? '-'}
+              />
               <View style={styles.inputSeparatorLG} />
               <ListItem
-                title={'Height'}
+                title={translate(
+                  {
+                    en: 'Height',
+                    id: 'Tinggi',
+                  },
+                  language,
+                )}
                 subtitle={userData.data?.height ?? '-'}
               />
               <View style={styles.inputSeparatorXS} />
-              <ListItem title={'Mass'} subtitle={userData.data?.mass ?? '-'} />
+              <ListItem
+                title={translate(
+                  {
+                    en: 'Mass',
+                    id: 'Berat',
+                  },
+                  language,
+                )}
+                subtitle={userData.data?.mass ?? '-'}
+              />
               <View style={styles.inputSeparatorXS} />
               <ListItem
-                title={'Birth year'}
+                title={translate(
+                  {
+                    en: 'Birth year',
+                    id: 'Tanggal Lahir',
+                  },
+                  language,
+                )}
                 subtitle={userData.data?.birth_year ?? '-'}
               />
               <View style={styles.inputSeparatorXS} />
               <ListItem
-                title={'Gender'}
+                title={translate(
+                  {
+                    en: 'Gender',
+                    id: 'Jenis Kelamin',
+                  },
+                  language,
+                )}
                 subtitle={userData.data?.gender ?? '-'}
               />
             </>
           ) : (
             <>
-              <ListItem title={'Fist Name'} subtitle={data?.firstName} />
+              <ListItem
+                title={translate(
+                  {
+                    en: 'Last Name',
+                    id: 'Nama Belakang',
+                  },
+                  language,
+                )}
+                subtitle={data?.firstName}
+              />
               <View style={styles.inputSeparatorXS} />
-              <ListItem title={'Last Name'} subtitle={data?.lastName} />
+              <ListItem
+                title={translate(
+                  {
+                    en: 'Last Name',
+                    id: 'Nama Belakang',
+                  },
+                  language,
+                )}
+                subtitle={data?.lastName}
+              />
               <View style={styles.inputSeparatorLG} />
-              <ListItem title={'Password'} subtitle={'*****'} />
+              <ListItem
+                title={translate(
+                  {
+                    en: 'Password',
+                    id: 'Kata Sandi',
+                  },
+                  language,
+                )}
+                subtitle={'*****'}
+              />
               <View style={styles.inputSeparatorXS} />
-              <ListItem title={'Confirm Password'} subtitle={'*****'} />
+              <ListItem
+                title={translate(
+                  {
+                    en: 'Confirm Password',
+                    id: 'Konfirmasi Sandi',
+                  },
+                  language,
+                )}
+                subtitle={'*****'}
+              />
               <View style={styles.inputSeparatorSM} />
-              <ListItem title={'Job Title'} subtitle={data?.jobTitle} />
+              <ListItem
+                title={translate(
+                  {
+                    en: 'Job Title',
+                    id: 'Nama Tugas',
+                  },
+                  language,
+                )}
+                subtitle={data?.jobTitle}
+              />
             </>
           )}
         </View>
         {isParentScreen && (
           <View style={styles.logoutContainer}>
             <TouchableOpacity onPress={onAskSignOut}>
-              <Text style={styles.titleSignOut}>SIGN OUT</Text>
+              <Text style={styles.titleSignOut}>
+                {translate(
+                  {
+                    en: 'SIGN OUT',
+                    id: 'KELUAR',
+                  },
+                  language,
+                )}
+              </Text>
             </TouchableOpacity>
             <Text style={styles.versionApp}>V.0.0.1</Text>
           </View>
@@ -304,6 +393,7 @@ const styles = StyleSheet.create({
   },
   titleSignOut: {
     fontWeight: 'bold',
+    color: Colors.red,
   },
   versionApp: {
     marginTop: 10,
