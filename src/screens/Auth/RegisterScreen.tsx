@@ -150,7 +150,7 @@ const RegisterScreen = (props: any) => {
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={70}
-      behavior={isIos ? 'padding' : 'height'}
+      // behavior={isIos ? 'padding' : ''}
       style={styles.container}>
       <LoaderModal visible={isLoading} />
       {savedAccount ? (

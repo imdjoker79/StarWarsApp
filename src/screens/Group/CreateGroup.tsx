@@ -182,7 +182,7 @@ const CreateGroup = (props: any) => {
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={70}
-      behavior={isIos ? 'padding' : 'height'}
+      // behavior={isIos ? 'padding' : null}
       style={styles.container}>
       <LoaderModal visible={isLoading} />
       <ScrollView contentContainerStyle={styles.contentContainerStyle}>

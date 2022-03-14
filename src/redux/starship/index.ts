@@ -15,7 +15,7 @@ export const initialState: initialStateProps = {
 };
 
 export const fetchStarship = createAsyncThunk(
-  'FETCH_DETAIL_USER',
+  'FETCH_STARSHIP',
   async (params: any, thunkData) => {
     try {
       return fetch('https://swapi.dev/api/starships', {
