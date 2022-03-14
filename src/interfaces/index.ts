@@ -47,6 +47,7 @@ export interface DataUser extends LoaderData {
   status?: number;
   message?: string | any;
   data: DataUserItem[];
+  isPickImage?: boolean;
 }
 
 export interface LoaderData {

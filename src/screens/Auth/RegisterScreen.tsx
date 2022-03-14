@@ -63,7 +63,6 @@ const RegisterScreen = (props: any) => {
       imageUrl: '',
       confirmPassword,
     };
-    setSavedAccount(true);
     if (isEmpty(tempData)) {
       setTempData(bodyRequest);
       dispatch(registerRequest(bodyRequest));
@@ -99,7 +98,7 @@ const RegisterScreen = (props: any) => {
     setVisibleModal(false);
     setTimeout(() => {
       setAuthRoot();
-    }, 700);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -113,6 +112,12 @@ const RegisterScreen = (props: any) => {
       }, 1000);
       dispatch(clearStatusState());
     } else if (registerData.status === 403) {
+      if (
+        registerData.message === 'Please add an image profile' ||
+        registerData.message === 'Mohon untuk mengambil gambar profil'
+      ) {
+        setSavedAccount(true);
+      }
       setIsLoading(false);
       if (isIos) {
         Alert.alert(

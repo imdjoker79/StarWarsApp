@@ -147,6 +147,7 @@ export const registerSlice = createSlice({
       state.message = 'Ok';
       state.isLoading = false;
       state.data.push(action.payload);
+      state.isPickImage = false;
     });
     builder.addCase(registerRequest.pending, state => {
       state.isLoading = true;
