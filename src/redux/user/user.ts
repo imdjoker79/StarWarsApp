@@ -14,14 +14,14 @@ const initialState: RemoteDataUser = {
 
 export const fetchDetailUser = createAsyncThunk(
   'FETCH_DETAIL_USER',
-  async (params, thunkData) => {
+  async (params: string, thunkData) => {
     try {
       return fetch(`https://swapi.dev/api/people/?search=${params}`, {
         method: 'GET',
       })
         .then(res => res.json())
         .then(res => {
-          return res.result[0];
+          return res.results[0];
         })
         .catch(err => {
           return thunkData.rejectWithValue(err);

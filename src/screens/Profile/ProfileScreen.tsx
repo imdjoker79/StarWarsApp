@@ -5,11 +5,13 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  ToastAndroid,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {isEmpty} from 'ramda';
 
-import {windowWidth} from '@common/const';
+import {isIos, windowWidth} from '@common/const';
 import {Colors} from '@common/colors';
 import ListItem from '@components/ListItem';
 import {setAuthRoot} from '@navigators/roots';
@@ -17,21 +19,28 @@ import LoaderModal from '@components/LoaderModal';
 import CustomModal from '@components/CustomModal';
 import translate from '@helpers/translator';
 import {useDispatch, useSelector} from 'react-redux';
-import {DataUserItem} from '@interfaces/index';
-import {clearAuthState} from '@redux/auth/login';
+import {DataUserItem, UpdateImageProfileBodyProps} from '@interfaces/index';
+import {clearAuthState, clearSuccessImageState} from '@redux/auth/login';
 import {fetchDetailUser} from '@redux/user/user';
 import {RootState} from '../../store';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {updateImageUser} from '../../redux/auth/login';
 
 interface ProfileScreenProps {
   isParentScreen?: boolean;
   data?: DataUserItem;
+  getImagePicker?: (val: any) => void;
 }
 
-const ProfileScreen = ({isParentScreen = true, data}: ProfileScreenProps) => {
+const ProfileScreen = ({
+  isParentScreen = true,
+  data,
+  getImagePicker,
+}: ProfileScreenProps) => {
   const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
   const authData = useSelector((state: RootState) => state.auth);
-
   const userData = useSelector((state: RootState) => state.user);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -44,6 +53,75 @@ const ProfileScreen = ({isParentScreen = true, data}: ProfileScreenProps) => {
   const onAskSignOut = () => {
     setIsWantSignOut(true);
   };
+
+  const onAddImage = async () => {
+    const result: any = await launchImageLibrary({
+      mediaType: 'photo',
+    });
+    if (result) {
+      //update from profile
+      if (isParentScreen) {
+        if (isIos) {
+          onUpdateImage(result?.assets[0]?.uri);
+        } else {
+          console.log(result);
+        }
+      } else {
+        //from register
+        getImagePicker!(result);
+      }
+    } else {
+      if (isIos) {
+      } else {
+        ToastAndroid.show(
+          translate(
+            {
+              en: 'Failed to pick image',
+              id: 'Gagal mengambil gambar',
+            },
+            language,
+          ),
+          ToastAndroid.SHORT,
+        );
+      }
+    }
+  };
+
+  const onUpdateImage = (val: any) => {
+    let body: UpdateImageProfileBodyProps = {
+      idUser: authData.data.id,
+      pathImage: val,
+    };
+    dispatch(updateImageUser(body));
+  };
+
+  useEffect(() => {
+    let message = translate(
+      {
+        en: 'Success to update image profile',
+        id: 'Berhasil mengubah foto profil',
+      },
+      language,
+    );
+    if (authData.successImage) {
+      dispatch(clearSuccessImageState());
+      if (isIos) {
+        Alert.alert(
+          translate(
+            {
+              en: 'Success',
+              id: 'Berhasil',
+            },
+            language,
+          ),
+          message,
+          [{text: 'OK', onPress: () => {}}],
+        );
+      } else {
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+      }
+    }
+  }, [authData, dispatch, language]);
 
   useEffect(() => {
     setIsWantSignOut(false);
@@ -59,12 +137,9 @@ const ProfileScreen = ({isParentScreen = true, data}: ProfileScreenProps) => {
   }, [authData, isParentScreen]);
 
   useEffect(() => {
-    dispatch(fetchDetailUser());
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, [userData]);
+    dispatch(fetchDetailUser(authData.data.firstName!));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authData]);
 
   return (
     <View style={styles.container}>
@@ -102,12 +177,21 @@ const ProfileScreen = ({isParentScreen = true, data}: ProfileScreenProps) => {
             {/* <Text style={styles.avatarPlaceholder}>LS</Text> */}
             <Image
               style={styles.avatar}
-              source={{uri: 'https://randomuser.me/api/portraits/men/1.jpg'}}
+              source={{
+                uri: data?.imageUrl ? data?.imageUrl : authData.data.imageUrl,
+              }}
             />
+            <TouchableOpacity style={styles.addImage} onPress={onAddImage}>
+              <MaterialCommunityIcons
+                name={'image-plus'}
+                size={25}
+                color={Colors.darkGray}
+              />
+            </TouchableOpacity>
           </View>
           <Text style={styles.userName}>
             {isParentScreen
-              ? userData.data.name
+              ? userData.data?.name ?? '-'
               : `${data?.firstName} ${data?.lastName}`}
           </Text>
         </View>
@@ -189,9 +273,9 @@ const styles = StyleSheet.create({
   avatar: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: windowWidth / 6,
-    height: windowWidth / 6,
-    borderRadius: windowWidth / 12,
+    width: windowWidth / 5,
+    height: windowWidth / 5,
+    borderRadius: windowWidth / 10,
     backgroundColor: Colors.darkGreen,
   },
   avatarPlaceholder: {
@@ -229,5 +313,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     backgroundColor: Colors.red,
+  },
+  addImage: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 });

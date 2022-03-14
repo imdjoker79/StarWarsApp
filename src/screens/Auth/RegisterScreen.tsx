@@ -28,6 +28,7 @@ import {
 } from '@redux/auth/register';
 import {DataUserItem, RegisterBodyProps} from '@interfaces/index';
 import uid from '@helpers/uuidGenerator';
+import {isEmpty} from 'ramda';
 
 const RegisterScreen = (props: any) => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const RegisterScreen = (props: any) => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [jobTitle, setJobTitle] = useState<string>('');
+
   const [savedAccount, setSavedAccount] = useState(false);
   const [visibleModal, setVisibleModal] = useState<boolean>(false);
   const [tempData, setTempData] = useState<DataUserItem>({});
@@ -49,19 +51,42 @@ const RegisterScreen = (props: any) => {
   var bodyRequest: RegisterBodyProps = {};
 
   const onSaveRegister = async () => {
+    setIsLoading(true);
     bodyRequest = {
       id: await uid(),
-      groupId: null,
+      groupId: [],
       email: email.toLowerCase(),
       firstName,
       lastName,
       password,
       jobTitle,
-      imageUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
+      imageUrl: '',
       confirmPassword,
     };
-    setTempData(bodyRequest);
-    dispatch(registerRequest(bodyRequest));
+    setSavedAccount(true);
+    if (isEmpty(tempData)) {
+      setTempData(bodyRequest);
+      dispatch(registerRequest(bodyRequest));
+    } else {
+      setTempData(bodyRequest);
+      dispatch(registerRequest(tempData));
+    }
+  };
+
+  const onPickImage = (val: any) => {
+    if (isIos) {
+      setTempData(prevState => ({
+        ...prevState,
+        imageUrl: val?.assets[0]?.uri,
+      }));
+    } else {
+      // setTempData(prevState => ({
+      //   ...prevState,
+      //   imageUrl: val?.assets[0]?.uri,
+      // }));
+      // setImageUrl(val?.assets[0]?.uri);
+      console.log(val);
+    }
   };
 
   const onGoCreateGroup = () => {
@@ -88,7 +113,6 @@ const RegisterScreen = (props: any) => {
 
   useEffect(() => {
     if (registerData.status === 200) {
-      setSavedAccount(true);
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
@@ -98,6 +122,7 @@ const RegisterScreen = (props: any) => {
       }, 1000);
       dispatch(clearStatusState());
     } else if (registerData.status === 403) {
+      setIsLoading(false);
       if (isIos) {
         Alert.alert(
           translate(
@@ -129,7 +154,7 @@ const RegisterScreen = (props: any) => {
     return () => {
       navigationButtonEventListener.remove();
     };
-  }, [email, firstName, lastName, password, jobTitle]);
+  }, [email, firstName, lastName, password, jobTitle, tempData, bodyRequest]);
 
   return (
     <KeyboardAvoidingView
@@ -138,7 +163,11 @@ const RegisterScreen = (props: any) => {
       style={styles.container}>
       <LoaderModal visible={isLoading} />
       {savedAccount ? (
-        <ProfileScreen isParentScreen={false} data={tempData} />
+        <ProfileScreen
+          isParentScreen={false}
+          data={tempData}
+          getImagePicker={onPickImage}
+        />
       ) : (
         <View style={styles.container}>
           <ScrollView contentContainerStyle={styles.contentContainerStyle}>

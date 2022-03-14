@@ -51,6 +51,7 @@ export interface DataUser extends LoaderData {
 
 export interface LoaderData {
   isLoading?: boolean;
+  successImage?: boolean;
 }
 
 export interface GroupBodyProps extends LoaderData {
@@ -78,4 +79,9 @@ export interface DataGroupItem {
 export interface UpdateGroupIdBodyProps {
   idUser: string;
   idGroup: string;
+}
+
+export interface UpdateImageProfileBodyProps {
+  idUser: string;
+  pathImage: string;
 }

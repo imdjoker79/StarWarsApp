@@ -42,6 +42,7 @@ const CreateGroup = (props: any) => {
   const language = useSelector((state: RootState) => state.language);
   const registerData = useSelector((state: RootState) => state.register);
   const groupData = useSelector((state: RootState) => state.group);
+  const authData = useSelector((state: RootState) => state.auth);
 
   const [groupName, setGroupName] = useState<string>('');
   const [groupDescription, setGroupDescription] = useState<string>('');
@@ -104,14 +105,14 @@ const CreateGroup = (props: any) => {
     let params = props.params;
     if (!isEmpty(params)) {
       let currentUser: DataUserItem = {
-        id: params.id,
-        groupId: params.groupId,
-        email: params.email,
-        firstName: params.firstName,
-        lastName: params.lastName,
-        password: params.lastName,
-        jobTitle: params.lastName,
-        imageUrl: params.lastName,
+        id: params?.id,
+        groupId: params?.groupId,
+        email: params?.email,
+        firstName: params?.firstName,
+        lastName: params?.lastName,
+        password: params?.lastName,
+        jobTitle: params?.lastName,
+        imageUrl: params?.lastName,
       };
       temMember.push(currentUser);
     }
@@ -252,7 +253,10 @@ const CreateGroup = (props: any) => {
 
           <View style={styles.listUserContainer}>
             {registerData.data
-              .filter(el => el.id !== props.params?.id)
+              .filter(el => {
+                let userId = props.params ? props.params?.id : authData.data.id;
+                el.id !== userId;
+              })
               .map((e: DataUserItem, index: number) => (
                 <GroupMemberItem
                   key={index}

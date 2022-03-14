@@ -74,8 +74,8 @@ export function setTabsRoot() {
               children: [
                 {
                   component: {
-                    id: Pages.groupScreen.id,
-                    name: Pages.groupScreen.name,
+                    id: Pages.createGroupScreen.id,
+                    name: Pages.createGroupScreen.name,
                   },
                 },
               ],

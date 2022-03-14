@@ -1,5 +1,9 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {AuthInitialState, AuthProps} from '@interfaces/index';
+import {
+  AuthInitialState,
+  AuthProps,
+  UpdateImageProfileBodyProps,
+} from '@interfaces/index';
 import {store} from '../../store';
 import validateEmail from '../../helpers/validator';
 import translate from '../../helpers/translator';
@@ -10,6 +14,7 @@ export const initialState: AuthInitialState = {
   data: {},
   isLoading: false,
   error: undefined,
+  successImage: false,
 };
 
 export const authRequest = createAsyncThunk(
@@ -70,6 +75,32 @@ export const authRequest = createAsyncThunk(
   },
 );
 
+export const updateImageUser = createAsyncThunk(
+  'UPDATE_USER_IMAGE_PROFILE',
+  async (body: UpdateImageProfileBodyProps, thunkData) => {
+    const language = store.getState().language;
+    const dataUser = store.getState().register;
+    try {
+      let findIndex = dataUser.data.findIndex(el => body.idUser === el.id);
+      let tempData = {
+        index: findIndex,
+        body,
+      };
+      return tempData;
+    } catch (_) {
+      return thunkData.rejectWithValue(
+        translate(
+          {
+            en: 'Failed to update user image',
+            id: 'Gagal mengubah data foto pengguna',
+          },
+          language,
+        ),
+      );
+    }
+  },
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -84,6 +115,9 @@ export const authSlice = createSlice({
     clearLoadingState: state => {
       state.isLoading = false;
       return state;
+    },
+    clearSuccessImageState: state => {
+      state.successImage = false;
     },
   },
   extraReducers: builder => {
@@ -100,9 +134,16 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+
+    //update profile image
+    //update image profile
+    builder.addCase(updateImageUser.fulfilled, (state, action) => {
+      state.data.imageUrl = action.payload.body.pathImage;
+      state.successImage = true;
+    });
   },
 });
 
-export const {clearAuthState} = authSlice.actions;
+export const {clearAuthState, clearSuccessImageState} = authSlice.actions;
 
 export default authSlice.reducer;

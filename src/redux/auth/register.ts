@@ -3,6 +3,7 @@ import {
   DataUser,
   RegisterBodyProps,
   UpdateGroupIdBodyProps,
+  UpdateImageProfileBodyProps,
 } from '@interfaces/index';
 import validateEmail from '../../helpers/validator';
 import translate from '../../helpers/translator';
@@ -72,6 +73,16 @@ export const registerRequest = createAsyncThunk(
             {
               en: 'Your password and confirmation password do not match.',
               id: 'Kata sandi dan konfirmasi kata sandi tidak sama',
+            },
+            language,
+          ),
+        );
+      } else if (isEmpty(body.imageUrl)) {
+        return thunkData.rejectWithValue(
+          translate(
+            {
+              en: 'Please add an image profile',
+              id: 'Mohon untuk mengambil gambar profil',
             },
             language,
           ),
@@ -146,8 +157,8 @@ export const registerSlice = createSlice({
       state.isLoading = false;
       state.message = action.payload;
     });
-    //update user group ID
 
+    //update user group ID
     builder.addCase(updateGroupIDUser.fulfilled, (state, action) => {
       state.data[action.payload.index].groupId?.push(
         action.payload.body.idGroup,
