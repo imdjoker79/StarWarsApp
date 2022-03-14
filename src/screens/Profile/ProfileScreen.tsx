@@ -185,21 +185,23 @@ const ProfileScreen = ({
       />
       <ScrollView>
         <View style={styles.headerContainer}>
-          <View style={styles.langSetting}>
-            <Switch
-              value={lang}
-              onValueChange={setLang}
-              disabled={false}
-              activeTextStyle={{color: Colors.darkGray}}
-              inactiveTextStyle={{color: Colors.darkGray}}
-              activeText={'ID'}
-              inActiveText={'EN'}
-              backgroundActive={Colors.white}
-              backgroundInactive={Colors.white}
-              circleActiveColor={Colors.primary}
-              circleInActiveColor={Colors.primary}
-            />
-          </View>
+          {isParentScreen && (
+            <View style={styles.langSetting}>
+              <Switch
+                value={lang}
+                onValueChange={setLang}
+                disabled={false}
+                activeTextStyle={{color: Colors.darkGray}}
+                inactiveTextStyle={{color: Colors.darkGray}}
+                activeText={'ID'}
+                inActiveText={'EN'}
+                backgroundActive={Colors.white}
+                backgroundInactive={Colors.white}
+                circleActiveColor={Colors.primary}
+                circleInActiveColor={Colors.primary}
+              />
+            </View>
+          )}
           <View style={styles.avatar}>
             {/* <Text style={styles.avatarPlaceholder}>LS</Text> */}
             <Image
