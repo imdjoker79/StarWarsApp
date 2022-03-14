@@ -26,6 +26,8 @@ import {RootState} from '../../store';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {launchCamera} from 'react-native-image-picker';
 import {updateImageUser} from '@redux/auth/login';
+import {Switch} from 'react-native-switch';
+import {switchLang} from '../../redux/language';
 
 interface ProfileScreenProps {
   isParentScreen?: boolean;
@@ -42,6 +44,8 @@ const ProfileScreen = ({
   const language = useSelector((state: RootState) => state.language);
   const authData = useSelector((state: RootState) => state.auth);
   const userData = useSelector((state: RootState) => state.user);
+
+  const [lang, setLang] = useState<boolean>(language.code === 'id');
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isWantSignOut, setIsWantSignOut] = useState<boolean>(false);
@@ -141,6 +145,14 @@ const ProfileScreen = ({
     dispatch(fetchDetailUser(authData.data.firstName!));
   }, [authData, dispatch]);
 
+  useEffect(() => {
+    dispatch(
+      switchLang(
+        lang ? {code: 'id', name: 'Indonesia'} : {code: 'en', name: 'English'},
+      ),
+    );
+  }, [dispatch, lang]);
+
   return (
     <View style={styles.container}>
       <LoaderModal visible={isLoading} />
@@ -173,6 +185,21 @@ const ProfileScreen = ({
       />
       <ScrollView>
         <View style={styles.headerContainer}>
+          <View style={styles.langSetting}>
+            <Switch
+              value={lang}
+              onValueChange={setLang}
+              disabled={false}
+              activeTextStyle={{color: Colors.darkGray}}
+              inactiveTextStyle={{color: Colors.darkGray}}
+              activeText={'ID'}
+              inActiveText={'EN'}
+              backgroundActive={Colors.white}
+              backgroundInactive={Colors.white}
+              circleActiveColor={Colors.primary}
+              circleInActiveColor={Colors.primary}
+            />
+          </View>
           <View style={styles.avatar}>
             {/* <Text style={styles.avatarPlaceholder}>LS</Text> */}
             <Image
@@ -408,5 +435,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
+  },
+  langSetting: {
+    top: 30,
+    right: 30,
+    position: 'absolute',
   },
 });

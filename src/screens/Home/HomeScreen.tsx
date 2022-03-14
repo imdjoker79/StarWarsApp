@@ -5,21 +5,23 @@ import {
   View,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {RootState, store} from '../../store';
-import translate from '../../helpers/translator';
+import translate from '@helpers/translator';
 import {useDispatch, useSelector} from 'react-redux';
-import {getPlatformTabsIcon} from '../../navigators/helpers/navigationIconHelpers';
-import {SFSymbols} from '../../assets/symbols/SFSymbols';
+import {getPlatformTabsIcon} from '@navigators/helpers/navigationIconHelpers';
+import {SFSymbols} from '@assets/symbols/SFSymbols';
 import {Navigation} from 'react-native-navigation';
-import {windowWidth} from '../../common/const';
-import {Colors} from '../../common/colors';
+import {windowWidth} from '@common/const';
+import {Colors} from '@common/colors';
 import {PieChart} from 'react-native-svg-charts';
-import {ChartLabel} from '../../components/ChartLabel';
-import {DataGroupItem, DataUserItem} from '../../interfaces';
-import {fetchStarship} from '../../redux/starship';
+import {ChartLabel} from '@components/ChartLabel';
+import {DataUserItem} from '@interfaces/index';
+import {fetchStarship} from '@redux/starship';
 import {isEmpty} from 'ramda';
+import moment from 'moment';
 
 let colorsChart: string[] = [
   Colors.defaultGrey,
@@ -45,25 +47,25 @@ const getPieChartDataRounded = (data: DataUserItem[]) => {
 export const data13 = [
   {
     key: 'General',
-    value: 50,
+    value: 4,
     svg: {fill: Colors.semiDarkGray},
     arc: {outerRadius: '80%', cornerRadius: 0},
   },
   {
     key: 'Commander',
-    value: 50,
+    value: 1,
     svg: {fill: Colors.thirdGreen},
     arc: {cornerRadius: 5},
   },
   {
     key: 'Pilot',
-    value: 40,
+    value: 2,
     svg: {fill: Colors.secondGreen},
     arc: {cornerRadius: 5},
   },
   {
     key: 'Jedi',
-    value: 95,
+    value: 3,
     svg: {fill: Colors.darkGreen},
     arc: {cornerRadius: 5},
   },
@@ -73,29 +75,39 @@ const HomeScreen = (props: any) => {
   const dispatch = useDispatch();
   const language = useSelector((state: RootState) => state.language);
   const authData = useSelector((state: RootState) => state.auth);
-  const dataUser = useSelector((state: RootState) => state.register);
+  // const dataUser = useSelector((state: RootState) => state.register);
   const dataGroup = useSelector((state: RootState) => state.group);
   const starship = useSelector((state: RootState) => state.starship);
 
-  const [stateDataGroup, setStateDataGroup] = useState<DataGroupItem>([]);
+  const [starShipData, setStarShipData] = useState<any>({});
 
-  const pieDataChart = getPieChartDataRounded(dataUser.data);
+  // const [stateDataGroup, setStateDataGroup] = useState<DataGroupItem>([]);
+
+  // const pieDataChart = getPieChartDataRounded(dataUser.data);
 
   const renderItem = ({item}: any) => {
     return (
       <View style={styles.renderItemContainer}>
         <Text style={{fontSize: 20, fontWeight: '800'}}>{item.name}</Text>
-        <Text style={{fontSize: 12, fontWeight: '300'}}>{item.model}</Text>
         <Text style={{fontSize: 12, fontWeight: '300'}}>
-          {item.manufacturer}
+          Model : {item.model}
         </Text>
         <Text style={{fontSize: 12, fontWeight: '300'}}>
-          {item.cost_in_credits}
+          Manufacturer : {item.manufacturer}
         </Text>
-        <Text style={{fontSize: 12, fontWeight: '300'}}>{item.length}</Text>
-        <Text style={{fontSize: 12, fontWeight: '300'}}>{item.crew}</Text>
-        <Text style={{fontSize: 12, fontWeight: '300'}}>{item.passengers}</Text>
-        <Text style={{fontSize: 12, fontWeight: '300'}}>{item.created}</Text>
+        <Text style={{fontSize: 12, fontWeight: '300'}}>
+          Cost: {item.cost_in_credits}
+        </Text>
+        <Text style={{fontSize: 12, fontWeight: '300'}}>
+          Length : {item.length}
+        </Text>
+        <Text style={{fontSize: 12, fontWeight: '300'}}>Crew :{item.crew}</Text>
+        <Text style={{fontSize: 12, fontWeight: '300'}}>
+          Passengers : {item.passengers}
+        </Text>
+        <Text style={{fontSize: 12, fontWeight: '300'}}>
+          Created : {moment(item.created).format('DD MMM yyyy')}
+        </Text>
       </View>
     );
   };
@@ -111,13 +123,14 @@ const HomeScreen = (props: any) => {
     }
   }, [authData, dataGroup]);
 
-  // useEffect(() => {
-  //   console.log(starship);
-  // }, [starship]);
-
   useEffect(() => {
     dispatch(fetchStarship(''));
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setStarShipData(starship);
+  }, [starship]);
 
   useEffect(() => {
     Navigation.mergeOptions(props.componentId, {
@@ -140,7 +153,7 @@ const HomeScreen = (props: any) => {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <View style={styles.avatar}>
-            <Text style={styles.groupPlaceholder}>GM</Text>
+            <Text style={styles.groupPlaceholder}>RA</Text>
           </View>
           <View style={styles.spacer} />
           <Text style={styles.groupName}>Rebels Alliance</Text>
@@ -160,7 +173,16 @@ const HomeScreen = (props: any) => {
               language,
             )}
           </Text>
-          <Text>10ple</Text>
+          <Text>
+            10{' '}
+            {translate(
+              {
+                en: 'People',
+                id: 'Orang',
+              },
+              language,
+            )}
+          </Text>
           <View style={styles.spacerVertical} />
           <View style={styles.row}>
             {dataGroup.data
@@ -183,11 +205,21 @@ const HomeScreen = (props: any) => {
           </PieChart>
         </View>
         <View style={styles.cardContainer}>
-          <Text style={styles.starshipTitle}>Starship Used by Alliance</Text>
-          {starship.data && (
+          <Text style={styles.starshipTitle}>
+            {translate(
+              {
+                en: 'Starship Used by Alliance',
+                id: 'Kapal Galaksi yang di gunakan Alliance',
+              },
+              language,
+            )}
+          </Text>
+          {starShipData?.isLoading ? (
+            <ActivityIndicator />
+          ) : (
             <FlatList
               horizontal={true}
-              data={starship.data}
+              data={starShipData?.data}
               renderItem={renderItem}
               contentContainerStyle={styles.containerItem}
               ItemSeparatorComponent={itemSeparator}
