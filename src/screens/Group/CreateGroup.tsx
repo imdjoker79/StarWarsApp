@@ -99,9 +99,20 @@ const CreateGroup = (props: any) => {
 
   const onClickAddMember = (el: DataUserItem) => {
     temMember.push(el);
+    ToastAndroid.show(
+      translate(
+        {
+          en: 'Sucess add new member',
+          id: 'Berhasil menambahkan user',
+        },
+        language,
+      ),
+      ToastAndroid.SHORT,
+    );
   };
 
   useEffect(() => {
+    console.log(props?.params?.id);
     let params = props.params;
     if (!isEmpty(params)) {
       let currentUser: DataUserItem = {
@@ -116,7 +127,8 @@ const CreateGroup = (props: any) => {
       };
       temMember.push(currentUser);
     }
-  }, [props, temMember]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
 
   useEffect(() => {
     if (groupData.status === 200) {
@@ -126,8 +138,10 @@ const CreateGroup = (props: any) => {
           password: props.params?.password,
         };
         dispatch(authRequest(bodyRequest));
-        setIsLoading(false);
-      }, 1000);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }, 700);
       dispatch(clearGroupStatusState());
     } else if (groupData.status === 403) {
       if (isIos) {
@@ -252,18 +266,16 @@ const CreateGroup = (props: any) => {
           </View>
 
           <View style={styles.listUserContainer}>
-            {registerData.data
-              .filter(el => {
-                let userId = props.params ? props.params?.id : authData.data.id;
-                el.id !== userId;
-              })
-              .map((e: DataUserItem, index: number) => (
-                <GroupMemberItem
-                  key={index}
-                  data={e}
-                  onClick={onClickAddMember}
-                />
-              ))}
+            {registerData.data.map((e: DataUserItem, index: number) => (
+              <GroupMemberItem
+                key={index}
+                data={e}
+                onClick={onClickAddMember}
+                isCurrentUser={
+                  e.id === props.params ? props.params?.id : authData.data.id
+                }
+              />
+            ))}
           </View>
         </View>
       </ScrollView>

@@ -74,19 +74,10 @@ const RegisterScreen = (props: any) => {
   };
 
   const onPickImage = (val: any) => {
-    if (isIos) {
-      setTempData(prevState => ({
-        ...prevState,
-        imageUrl: val?.assets[0]?.uri,
-      }));
-    } else {
-      // setTempData(prevState => ({
-      //   ...prevState,
-      //   imageUrl: val?.assets[0]?.uri,
-      // }));
-      // setImageUrl(val?.assets[0]?.uri);
-      console.log(val);
-    }
+    setTempData(prevState => ({
+      ...prevState,
+      imageUrl: val?.assets[0]?.uri,
+    }));
   };
 
   const onGoCreateGroup = () => {
@@ -176,6 +167,7 @@ const RegisterScreen = (props: any) => {
               placeholder={'XXX@gmail.com'}
               autoCapitalize={'none'}
               onChange={setEmail}
+              keyboardType="email-address"
             />
             <View style={styles.inputSeparatorLG} />
             <TextInputCustom

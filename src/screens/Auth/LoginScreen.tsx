@@ -125,6 +125,7 @@ const LoginScreen = (props: any) => {
           onChangeText={setEmail}
           style={styles.textInput}
           autoCapitalize={'none'}
+          keyboardType="email-address"
         />
 
         <TextInput
