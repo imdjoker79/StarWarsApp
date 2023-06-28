@@ -131,7 +131,6 @@ End the we can see sample screenshot running project with android like below.
 
 <p float="left">
 <img src="https://user-images.githubusercontent.com/39134128/158174520-671aec95-7341-4b4e-9cb7-b0a0a3684502.jpeg" width="25%"/>
-<img src="https://user-images.githubusercontent.com/39134128/158176017-c0f4762f-f426-48b7-bdec-44f5964e3a57.jpeg" width="25%"/>
 
 </p>
 </br>
