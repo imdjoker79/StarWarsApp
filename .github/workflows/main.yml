@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v2  # Upgrade to v3 if available
+      uses: actions/checkout@v3 # Upgrade to v3 if available
 
     - name: Set up JDK
       uses: actions/setup-java@v2  # Assuming v2 is the updated version
